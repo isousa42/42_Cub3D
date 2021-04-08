@@ -67,9 +67,21 @@ void    create_player(t_player *player)
 
 int     render_next_frame(t_player *player)
 {
+    
+    int x = player->pos_x;
+    int y = player->pos_y;
+    while (x <= 500)
+    {
+        while (y <= 500)
+        {
+            mlx_pixel_put(player->mlx_ptr, player->win_ptr, x, y, 0xffffff);
+            y++;
+        }
+        x++;
+        y = player->pos_y;
+    }
     player->pos_x += 10;
     player->pos_y += 10;
-    clear_window(player->mlx_ptr, player->win_ptr, 0xffffff);
     mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->player, player->pos_x, player->pos_y);
 
     return 0;
