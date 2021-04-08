@@ -1,50 +1,89 @@
 
 
 
-#include <stdio.h>
 #include <mlx.h>
 
-int main()
+typedef struct s_player
 {
-    void    *mlx_ptr;
+    void    *player;
+    char    *addr;
+    int     bits_per_pixel;
+    int     line_lenght;
+    int     endian;
+    int     pos_x;
+    int     pos_y;
     void    *win_ptr;
-    int     y;
-    int     x;
-    int     max_x;
-    int     max_y;
-    int     pixel;
-    int pos_x;
-    int pos_y;
+    void    *mlx_ptr;
 
-    y = 0;
-    x = 0;
-    max_x = 1000;
-    max_y = 1000;
-    pos_x = max_x / 2 - 50;
-    pos_y = max_y / 2 - 50;
+}               t_player;
 
-    mlx_ptr = mlx_init();
-    win_ptr = mlx_new_window(mlx_ptr, max_x, max_y, "Cub3D");
-    while (x <= max_x)
+void    clear_window(void *mlx_ptr, void *win_ptr, int color)
+{
+    int x = 0;
+    int y = 0;
+    int pixel = 0;
+
+    while (x <= 500)
     {
-        while (y <= max_y)
+        while (y <= 500)
         {
-            pixel = mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xffffff);
+            pixel = mlx_pixel_put(mlx_ptr, win_ptr, x, y, color);
             y++;
         }
         x++;
         y = 0;
     }
-    while (pos_x <= (max_x / 2) + 50)
+}
+
+void    put_pixel(t_player *player, int x, int y, int color)
+{
+    char *offset;
+
+    offset = player->addr + (y * player->line_lenght + x * (player->bits_per_pixel / 8));
+    *(unsigned int*)offset = color;
+}
+
+void    create_player(t_player *player)
+{
+    player->pos_x = 225;
+    player->pos_y = 225;
+    int x = 0;
+    int y = 0;
+
+    player->player = mlx_new_image(player->mlx_ptr, 50, 50);
+    player->addr = mlx_get_data_addr(player->player, &player->bits_per_pixel, &player->line_lenght, &player->endian);
+    while (x <= 50)
     {
-        while (pos_y <= (max_y / 2) + 50)
+        while (y <= 50)
         {
-            pixel = mlx_pixel_put(mlx_ptr, win_ptr, pos_x, pos_y, 0xff007f);
-            pos_y++;
+            put_pixel(player, x, y, 0xff007f);
+            y++;
         }
-        pos_x++;
-        pos_y = max_y / 2 - 50;
+        x++;
+        y = 0;
     }
-    mlx_loop(mlx_ptr);
+    mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->player, player->pos_x, player->pos_y);
+}
+
+int     render_next_frame(t_player *player)
+{
+    player->pos_x += 10;
+    player->pos_y += 10;
+    clear_window(player->mlx_ptr, player->win_ptr, 0xffffff);
+    mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->player, player->pos_x, player->pos_y);
+
+    return 0;
+}
+
+int main()
+{
+    t_player player;
+
+    player.mlx_ptr = mlx_init();
+    player.win_ptr = mlx_new_window(player.mlx_ptr, 500, 500, "Cub3D");
+    clear_window(player.mlx_ptr, player.win_ptr, 0xffffff);
+    create_player(&player);
+    mlx_loop_hook(player.mlx_ptr, render_next_frame, &player);
+    mlx_loop(player.mlx_ptr);
 }
 
