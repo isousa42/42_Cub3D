@@ -1,6 +1,6 @@
 
 
-
+#include <stdio.h>
 #include <mlx.h>
 
 typedef struct s_player
@@ -17,21 +17,17 @@ typedef struct s_player
 
 }               t_player;
 
-void    clear_window(void *mlx_ptr, void *win_ptr, int color)
+void    clear_pixels(t_player *player, int x, int y, int lim_x, int lim_y, int color)
 {
-    int x = 0;
-    int y = 0;
-    int pixel = 0;
-
-    while (x <= 500)
+    while (x <= lim_x)
     {
-        while (y <= 500)
+        while (y <= lim_y)
         {
-            pixel = mlx_pixel_put(mlx_ptr, win_ptr, x, y, color);
+            mlx_pixel_put(player->mlx_ptr, player->win_ptr, x, y, color);
             y++;
         }
         x++;
-        y = 0;
+        y = player->pos_y;
     }
 }
 
@@ -65,25 +61,64 @@ void    create_player(t_player *player)
     mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->player, player->pos_x, player->pos_y);
 }
 
-int     render_next_frame(t_player *player)
+int     go_down(t_player *player)
 {
     
     int x = player->pos_x;
     int y = player->pos_y;
-    while (x <= 500)
-    {
-        while (y <= 500)
-        {
-            mlx_pixel_put(player->mlx_ptr, player->win_ptr, x, y, 0xffffff);
-            y++;
-        }
-        x++;
-        y = player->pos_y;
-    }
-    player->pos_x += 10;
+    clear_pixels(player, x, y, 500, 500, 0xffffff);
     player->pos_y += 10;
     mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->player, player->pos_x, player->pos_y);
 
+    return 0;
+}
+
+int     go_up(t_player *player)
+{
+    
+    int x = player->pos_x;
+    int y = player->pos_y;
+    clear_pixels(player, x, y, 500, 500, 0xffffff);
+    player->pos_y -= 10;
+    mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->player, player->pos_x, player->pos_y);
+
+    return 0;
+}
+
+int     go_left(t_player *player)
+{
+    
+    int x = player->pos_x;
+    int y = player->pos_y;
+    clear_pixels(player, x, y, 500, 500, 0xffffff);
+    player->pos_x -= 10;
+    mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->player, player->pos_x, player->pos_y);
+
+    return 0;
+}
+
+int     go_right(t_player *player)
+{
+    
+    int x = player->pos_x;
+    int y = player->pos_y;
+    clear_pixels(player, x, y, 500, 500, 0xffffff);
+    player->pos_x += 10;
+    mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->player, player->pos_x, player->pos_y);
+
+    return 0;
+}
+
+int     key_hook(int keycode, t_player *player)
+{
+    if (keycode == 1)
+        go_down(player);
+    if (keycode == 13)
+        go_up(player);
+    if (keycode == 0)
+        go_left(player);
+    if (keycode == 2)
+        go_right(player);
     return 0;
 }
 
@@ -93,9 +128,9 @@ int main()
 
     player.mlx_ptr = mlx_init();
     player.win_ptr = mlx_new_window(player.mlx_ptr, 500, 500, "Cub3D");
-    clear_window(player.mlx_ptr, player.win_ptr, 0xffffff);
+    clear_pixels(&player, 0, 0, 500, 500, 0xffffff);
     create_player(&player);
-    mlx_loop_hook(player.mlx_ptr, render_next_frame, &player);
+    mlx_key_hook(player.win_ptr, key_hook, &player);
     mlx_loop(player.mlx_ptr);
 }
 
