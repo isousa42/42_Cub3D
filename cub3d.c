@@ -1,7 +1,15 @@
 #include "mlx.h"
+#include <math.h>
 
 #define mapWidth 24
 #define mapHeight 24
+#define width 640
+#define height 480
+#define KEY_W 13
+#define KEY_S 1
+#define KEY_A 0
+#define KEY_D 2
+
 
 typedef struct s_info
 {
@@ -14,14 +22,14 @@ typedef struct s_info
 	double planeX;
 	double planeY;
 	double time;
-	double oldtime;
+	double oldTime;
 	double moveSpeed;
 	double rotSpeed;
 	double oldDirX;
 	double oldPlaneX;
 }		t_info;
 
-int map[mapwidth][mapHeight]=
+int map[mapWidth][mapHeight]=
 {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -53,6 +61,9 @@ int map[mapwidth][mapHeight]=
 
 void	draw_line(t_info *info, int x, int start, int end, int color)
 {
+	int y;
+
+	y = start;
 	while(start <= end)
 	{
 		mlx_pixel_put(info->mlx, info->win, x, y, color);
@@ -98,11 +109,11 @@ int	rc_loop(t_info *info)
 	{
 		cameraX = 2 * x / (double)width - 1; // 0 = middle, 1 = right, -1 = left
 		rayDirX = info->dirX + info->planeX * cameraX; 
-		rayDirY = info->dirY + indo->planeY * cameraX; // Sum of the direction of the player and a part of the plane
+		rayDirY = info->dirY + info->planeY * cameraX; // Sum of the direction of the player and a part of the plane
 		mapX = (int)info->posX; 
 		mapY = (int)info->posY; //the ray starts in the same position as the player
-		deltaDistX = abs(1 / rayDirX); //Simplified from sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX)
-		deltaDistY = abs(1 / rayDirY); // Simplified from sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY)
+		deltaDistX = fabs(1 / rayDirX); //Simplified from sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX)
+		deltaDistY = fabs(1 / rayDirY); // Simplified from sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY)
 
 		hit = 0; // will be 1 if it hits the wall
 	
@@ -145,7 +156,7 @@ int	rc_loop(t_info *info)
 				side = 1;
 			}
 			//Check if it is wall
-			if (worldMap[mapX][mapY] > 0)
+			if (map[mapX][mapY] > 0)
 				hit = 1;
 		}
 		if (side == 0)
@@ -162,14 +173,13 @@ int	rc_loop(t_info *info)
 		if (drawEnd >= height)
 			drawEnd = height - 1;
 	
-		if (worldMap[mapX][mapY] == 1)
+		if (map[mapX][mapY] == 1)
 			color = 0xFF0000;
 		else
 			color = 0xFFFF00;
 	
 		draw_line(info, x, drawStart, drawEnd, color);
 		x++;
-		}
 	}
 	return (0);
 }
@@ -179,39 +189,40 @@ int	key_hook(int key_code, t_info *info)
 	// W moves the player forward
 	if(key_code == KEY_W)
 	{
-		if (!WorldMap[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)]
+		if (!map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)])
 			info->posX += info->dirX * info->moveSpeed;
-		if (!worldMap[(int)(info->posX)][(int)info->posY - info->dirY * info->moveSpeed)])
+		if (!map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)])
 			info->posY += info->dirY * info->moveSpeed;
-
+	}
 	// S moves the player backwards
 	if (key_code == KEY_S)
 	{
-		if(!worldMap[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)])
-			info->posX -= dirX *info->moveSpeed;
-		if(!worldMap[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)])
-			info-posY -= dirY * info->moveSpeed;
-	
+		if(!map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)])
+			info->posX -= info->dirX *info->moveSpeed;
+		if(!map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)])
+			info->posY -= info->dirY * info->moveSpeed;
+	}
 	// D moves the player to the right
-	if(key_code == K_D)
+	if(key_code == KEY_D)
 	{
 		info->oldDirX = info->dirX;
 		info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
 		info->dirY = info->oldDirX * sin(-info->rotSpeed) + info->dirY * cos(-info->rotSpeed);
-		oldPlaneX = planeX;
-		planeX = planeX * cos(-info->rotSpeed) + planeY * cos(-info->rotSpeed);
+		info->oldPlaneX = info->planeX;
+		info->planeX = info->planeX * cos(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
 	}
 
 	// A moves the player to the left
-	if(key_code == K_A)
+	if(key_code == KEY_A)
 	{
 		info->oldDirX = info->dirX;
 		info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
-		info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
+		info->dirY = info->oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
 		info->oldPlaneX = info->planeX;
 		info->planeX = info->planeX * cos(info->moveSpeed) - info->planeY * sin(info->rotSpeed);
-		info->planeY = info->oldPlaneX * sin(info->rotSpeed) + planeY * cos(info->rotSpeed);
+		info->planeY = info->oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
 	}
+	return (0);
 }
 
 int main()
@@ -239,10 +250,10 @@ int main()
 	info.rotSpeed = 0.05;
 
 	info.mlx = mlx_init();
-	info.win = mlx_new_window(info.mlx, 640, 480, "Cub3D");
+	info.win = mlx_new_window(info.mlx, width, height, "Cub3D");
 
 	mlx_loop_hook(info.mlx, &rc_loop, &info);
 	mlx_hook(info.win, 2, 0, &key_hook, &info);
 
-       	mlx_loop(info.mlx);	
+    mlx_loop(info.mlx);	
 }
