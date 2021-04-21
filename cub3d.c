@@ -61,12 +61,10 @@ int map[mapWidth][mapHeight]=
 
 void	draw_line(t_info *info, int x, int start, int end, int color)
 {
-	int y;
 
-	y = start;
 	while(start <= end)
 	{
-		mlx_pixel_put(info->mlx, info->win, x, y, color);
+		mlx_pixel_put(info->mlx, info->win, x, start, color);
 		start++;
 	}
 }
@@ -105,7 +103,7 @@ int	rc_loop(t_info *info)
 	int color;
 
 	x = 0;
-	while (x < 640) // 640 is width of window
+	while (x < width) // 640 is width of window
 	{
 		cameraX = 2 * x / (double)width - 1; // 0 = middle, 1 = right, -1 = left
 		rayDirX = info->dirX + info->planeX * cameraX; 
@@ -246,8 +244,8 @@ int main()
 	info.oldTime = 0;
 
 	// Speed of the moves
-	info.moveSpeed = 0.05;
-	info.rotSpeed = 0.05;
+	info.moveSpeed = 0.1;
+	info.rotSpeed = 0.1;
 
 	info.mlx = mlx_init();
 	info.win = mlx_new_window(info.mlx, width, height, "Cub3D");
