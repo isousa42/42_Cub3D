@@ -139,3 +139,6 @@ int	key_release(int keycode, t_info *info);
 int	key_press(int keycode, t_info *info);
 int	key_hook(t_info *info);
 
+// raycasting.c
+void    floor_draw(t_info *info);
+
