@@ -139,6 +139,14 @@ int	key_release(int keycode, t_info *info);
 int	key_press(int keycode, t_info *info);
 int	key_hook(t_info *info);
 
-// raycasting.c
+// floor.c
 void    floor_draw(t_info *info);
+void	floor_init(t_info *info);
+void	floor_calculations(t_info *info);
+void	floor_setup(t_info *info);
 
+// wall.c
+
+void    wall_init(t_info *info);
+void    ray_walking(t_info *info);
+void    dda_algorithm(t_info *info);
