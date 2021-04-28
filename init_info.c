@@ -14,6 +14,6 @@ void    ft_init_info(t_info *info)
 	info->planeY = 0.66;
 
 	// Speed of the moves
-	info->moveSpeed = 0.15;
-	info->rotSpeed = 0.15;
+	info->moveSpeed = 0.03;
+	info->rotSpeed = 0.03;
 }
