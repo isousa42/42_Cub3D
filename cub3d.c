@@ -1,54 +1,4 @@
-#include "mlx.h"
-#include <unistd.h>
-#include <math.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#define mapWidth 24
-#define mapHeight 24
-#define width 640
-#define height 480
-#define textWidth 64
-#define textHeight 64
-
-#define X_EVENT_KEY_PRESS	2
-#define X_EVENT_KEY_EXIT	17
-
-#define KEY_W 13
-#define KEY_S 1
-#define KEY_A 0
-#define KEY_D 2
-#define KEY_ESC 53
-
-typedef struct s_image
-{
-	void	*img;
-	int	*data;
-	int	size;
-	int	bpp;
-	int	endian;
-	int	img_width;
-	int	img_height;
-}		t_image;
-
-typedef struct s_info
-{
-	void *mlx;
-	void *win;
-	t_image img;
-	int	buff[height][width];
-	int	**texture;
-	double posX;
-	double posY;
-	double dirX;
-	double dirY;
-	double planeX;
-	double planeY;
-	double moveSpeed;
-	double rotSpeed;
-}		t_info;
-
+#include "cub3d.h"
 
 int map[mapWidth][mapHeight]=
 {
@@ -77,40 +27,6 @@ int map[mapWidth][mapHeight]=
 	{2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
 	{2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
 };
-
-/*
-// FUNTION DRAW_LINE - Draws the vertical lines in the window after calculation
-
-void	draw_line(t_info *info, int x, int start, int end, int color)
-{
-
-	while(start <= end)
-	{
-		mlx_pixel_put(info->mlx, info->win, x, start, color);
-		start++;
-	}
-}
-*/
-
-// FUNCTION draw_img() is going to draw the image of the walls and the upload this image to the window
-// void	draw_img(t_info *info)
-// {
-// 	int x;
-// 	int y;
-
-// 	x = 0;
-// 	y = 0;
-// 	while (x < height)
-// 	{
-// 		while (y < width)
-// 		{
-// 			info->img.data[x * width + y] = info->buff[x][y];
-// 			y++;
-//  		}
-// 		x++;
-// 	}
-// 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
-// }
 
 void	draw_img(t_info *info)
 {
@@ -484,103 +400,17 @@ int	key_hook(int key, t_info *info)
 	return (0);
 }
 
-
-// FUNCTION load_img() is going to load the image to be used on the texture. The functions of mlx will use the variables to make it, we don't need to worry about it. the *path is the directory to the xpm image
-void	load_img(t_info *info, int *texture, char *path, t_image *img)
-{
-	int x;
-	int y;
-
-	img->img = mlx_xpm_file_to_image(info->mlx, path, &img->img_width, &img->img_height);
-	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size, &img->endian);
-	y = 0;
-	while (y < img->img_height)
-	{
-		x = 0;
-		while (x < img->img_width)
-		{
-			texture[img->img_width * y + x] = img->data[img->img_width * y + x];
-			x++;
-		}
-		y++;
-	}
-	mlx_destroy_image(info->mlx, img->img);	
-}
-
-// FUNCTION load_text() is going to load the textures to the texture matrix. 
-void	load_text(t_info *info)
-{
-	t_image	img;
-
-	load_img(info, info->texture[0], "textures/eagle.xpm", &img);
-	load_img(info, info->texture[1], "textures/redbrick.xpm", &img);
-	load_img(info, info->texture[2], "textures/purplestone.xpm", &img);
-	load_img(info, info->texture[3], "textures/greystone.xpm", &img);
-	load_img(info, info->texture[4], "textures/bluestone.xpm", &img);
-	load_img(info, info->texture[5], "textures/mossy.xpm", &img);
-	load_img(info, info->texture[6], "textures/wood.xpm", &img);
-	load_img(info, info->texture[7], "textures/colorstone.xpm", &img);
-}
-
 int main()
 {
 	t_info info;
 	info.mlx = mlx_init();
 
-	//Initial position of the player
-	info.posX = 22;
-	info.posY = 12;
-
-	//Initial Direction the player is looking
-	info.dirX = -1;
-	info.dirY = 0.0;
-
-	//Initial FOV
-	info.planeX = 0.0;
-	info.planeY = 0.66;
-
+	//initialize the variables of the info struct
+	ft_init_info(&info);
 	
-	// Index variables for creating the buffer for the texture
-	int i = 0;
-	int j = 0;
-	
-	// Creating the buffer - With the textures, the vertical stripes can not be drawn with the vertical line command anymore, instead every pixel has to be drawn separetely. So we need a 2D array, used as ascreen buffer, and copy it to the screen at once, already with the texture. It goes a lot faster, than drawing pixel by pixel. 
-	while (i < height)
-	{
-		while (j < width)
-		{
-			info.buff[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-	// Allocating memory for the textures and load the textures. Since the buffer fuction works with single integer valus for colors (instead of 3 separate bytes for RGB), the textures are stored in this format as well. 
-	i = 0;
-	if (!(info.texture = (int **)malloc(sizeof(int *) * 8)))
+	//Create buff and textures
+	if (ft_handle_text(&info) != 0)
 		return (-1);
-	while (i < 8)
-	{
-		if (!(info.texture[i] = (int *)malloc(sizeof(int) * (textHeight * textWidth))))
-			return (-1);
-		i++;
-	}
-	i = 0;
-	j = 0;
-	while (i < 8)
-	{
-		while (j < textHeight * textWidth)
-		{
-			info.texture[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-	// FUNCTION THAT READS THE TEXTURES IN THE FILES
-	load_text(&info);
-
-	// Speed of the moves
-	info.moveSpeed = 0.05;
-	info.rotSpeed = 0.05;
 
 	info.win = mlx_new_window(info.mlx, width, height, "mlx");
 
@@ -593,5 +423,4 @@ int main()
 	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_hook, &info);
 
     mlx_loop(info.mlx);		
-
 }

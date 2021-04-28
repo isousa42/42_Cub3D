@@ -4,16 +4,17 @@ RM	= rm -f
 
 NAME	= cub3D
 
+HEADER = cub3d.h
 INCLUDE = ../include
 MLX = /usr/local/lib
-LFLAGS = -lmlx -framework OPENGL -framework AppKit
-SRCS	= cub3d.c
+LFLAGS = -lmlx -framework OPENGL -framework AppKit -g
+SRCS	= cub3d.c init_text.c init_info.c
 
 OBJS	= $(SRCS:.c=.o)
 
 all:	$(NAME)
 
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJS) $(HEADER)
 			$(CC) -I $(INCLUDE) -o $(NAME) $(OBJS) -L $(MLX) $(LFLAGS)
 
 clean:
