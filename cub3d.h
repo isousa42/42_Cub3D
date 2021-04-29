@@ -124,20 +124,24 @@ typedef struct s_info
 	double rotSpeed;
 }		t_info;
 
+// cub3d.c
+void	rc_loop(t_info *info);
+int		first_loop(t_info *info);
+
 // init_test.c
-int	ft_handle_text(t_info *info);
+int		ft_handle_text(t_info *info);
 void	load_text(t_info *info);
 void	load_img(t_info *info, int *texture, char *path, t_image *img);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-void init_map(t_info *info);
+void	init_map(t_info *info);
 
 // init_info.c
 void    ft_init_info(t_info *info);
 
 // keys.c
-int	key_release(int keycode, t_info *info);
-int	key_press(int keycode, t_info *info);
-int	key_hook(t_info *info);
+int		key_release(int keycode, t_info *info);
+int		key_press(int keycode, t_info *info);
+int		key_hook(t_info *info);
 
 // floor.c
 void    floor_draw(t_info *info);
@@ -150,3 +154,8 @@ void	floor_setup(t_info *info);
 void    wall_init(t_info *info);
 void    ray_walking(t_info *info);
 void    dda_algorithm(t_info *info);
+void	wall_calc(t_info *info);
+void	wall_text(t_info *info);
+
+//utils.c
+void	draw_img(t_info *info);
