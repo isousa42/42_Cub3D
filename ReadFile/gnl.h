@@ -3,8 +3,8 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-
-#define BUFFERSIZE 42
+# include <fcntl.h>
+# include <stdio.h>
 
 int		get_next_line(int fd, char **line);
 char	*ft_strjoin(char *s1, char *s2);

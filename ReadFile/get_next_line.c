@@ -39,14 +39,16 @@ static int	ft_returns(int fd, char **line, char **store, int readcount)
 
 int			get_next_line(int fd, char **line)
 {
+	int			buffer_size;
 	static char	*store[100000];
-	char		buff[BUFFER_SIZE + 1];
+	char		buff[buffer_size + 1];
 	char		*temp;
 	int			readcount;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
+	buffer_size = 31;
+	if (fd < 0 || !line || buffer_size <= 0)
 		return (-1);
-	while ((readcount = read(fd, buff, BUFFER_SIZE)) > 0)
+	while ((readcount = read(fd, buff, buffer_size)) > 0)
 	{
 		buff[readcount] = '\0';
 		if (!store[fd])
