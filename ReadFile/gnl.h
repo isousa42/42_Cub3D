@@ -17,6 +17,7 @@ typedef struct s_file
     char    *flagS;
     int     flagF[3];
     int     flagC[3];
+    int     **map;
 
 }       t_file;
 
@@ -28,5 +29,15 @@ char	*ft_substr(char *s, int start, int len);
 int		ft_strlen(char *str);
 int     ft_isdigit(int c);
 int     ft_isalpha(int c);
+
+//parse_utils.c
+void    parse_r(t_file *file, char **save, int x, int y);
+void    parse_no(t_file *file, char **save, int x, int y);
+void    parse_so(t_file *file, char **save, int x, int y);
+void    parse_we(t_file *file, char **save, int x, int y);
+void    parse_ea(t_file *file, char **save, int x, int y);
+void    parse_s(t_file *file, char **save, int x, int y);
+void    parse_f(t_file *file, char **save, int x, int y);
+void    parse_c(t_file *file, char **save, int x, int y);
 
 #endif
