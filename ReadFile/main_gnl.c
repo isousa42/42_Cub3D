@@ -29,7 +29,7 @@ void    parse_file(t_file *file, char **save)
             parse_c(file, save, x, y);
         if (save[x][y] == '1')
             parse_map(file, save, x, y);
-        if (!save)
+        if (save[x] == 0)
             break;
         else 
         {
