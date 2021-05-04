@@ -17,8 +17,8 @@ void    parse_r(t_file *file, char **save, int x, int y)
         y++;
     }
 
-        printf("%d\n", file->flagRX);
-    printf("%d\n", file->flagRY);
+        //printf("%d\n", file->flagRX);
+   // printf("%d\n", file->flagRY);
 }
 
 void    parse_no(t_file *file, char **save, int x, int y)
@@ -29,7 +29,7 @@ void    parse_no(t_file *file, char **save, int x, int y)
         y++;
     file->flagNO = ft_substr(save[x], y, ft_strlen(save[x]) - y);
 
-    printf("%s\n", file->flagNO);
+    //printf("%s\n", file->flagNO);
 }
 
 void    parse_so(t_file *file, char **save, int x, int y)
@@ -40,7 +40,7 @@ void    parse_so(t_file *file, char **save, int x, int y)
         y++;
     file->flagSO = ft_substr(save[x], y, ft_strlen(save[x]) - y);
 
-    printf("%s\n", file->flagSO);
+    //printf("%s\n", file->flagSO);
 }
 
 void    parse_we(t_file *file, char **save, int x, int y)
@@ -51,7 +51,7 @@ void    parse_we(t_file *file, char **save, int x, int y)
         y++;
     file->flagWE = ft_substr(save[x], y, ft_strlen(save[x]) - y);
 
-    printf("%s\n", file->flagWE);
+    //printf("%s\n", file->flagWE);
 }
 
 void    parse_ea(t_file *file, char **save, int x, int y)
@@ -62,7 +62,7 @@ void    parse_ea(t_file *file, char **save, int x, int y)
         y++;
     file->flagEA = ft_substr(save[x], y, ft_strlen(save[x]) - y);
 
-    printf("%s\n", file->flagEA);
+    //printf("%s\n", file->flagEA);
 }
 
 void    parse_s(t_file *file, char **save, int x, int y)
@@ -73,7 +73,7 @@ void    parse_s(t_file *file, char **save, int x, int y)
         y++;
     file->flagS = ft_substr(save[x], y, ft_strlen(save[x]) - y);
 
-        printf("%s\n", file->flagS);
+        //printf("%s\n", file->flagS);
 }
 
 void    parse_f(t_file *file, char **save, int x, int y)
@@ -107,9 +107,9 @@ void    parse_f(t_file *file, char **save, int x, int y)
     file->flagF[1] = g;
     file->flagF[2] = b;
 
-    printf("%d\n", file->flagF[0]);
-    printf("%d\n", file->flagF[1]);
-    printf("%d\n", file->flagF[2]);
+    // printf("%d\n", file->flagF[0]);
+    // printf("%d\n", file->flagF[1]);
+    // printf("%d\n", file->flagF[2]);
 }
 
 void    parse_c(t_file *file, char **save, int x, int y)
@@ -143,9 +143,9 @@ void    parse_c(t_file *file, char **save, int x, int y)
     file->flagC[2] = b2;
 
 
-    printf("%d\n", file->flagC[0]);
-    printf("%d\n", file->flagC[1]);
-    printf("%d\n", file->flagC[2]);
+    // printf("%d\n", file->flagC[0]);
+    // printf("%d\n", file->flagC[1]);
+    // printf("%d\n", file->flagC[2]);
 }
 
 int     count_lines_map(char **save, int x)
@@ -163,30 +163,19 @@ int     count_lines_map(char **save, int x)
 
 void    parse_map(t_file *file, char **save, int x, int y)
 {
+    char **map;
     int i;
     int j;
-    static int **file_map;
 
-    file_map = malloc(sizeof(int *) * count_lines_map(save, x));
     i = 0;
-    while (1)
+    j = 0;
+    y = 0;
+    map = (char **)malloc(sizeof(char *) * count_lines_map(save, x));
+    while (save[x])
     {
-        j = 0;
-        while(save[x][y] != '\0' && ft_isdigit(save[x][y]))
-        {
-            file_map[i][j] = (int)save[x][y] - '0';
-            y++;
-        }
+        map[i] = ft_strdup(save[x]);
         x++;
-        if (!save)
-            break;
-        else 
-        {
-            if (save[x][y] == ' ')
-                while (save[x][y] == ' ')
-                    y++;
-            else
-                y = 0;
-        }
+        i++;
     }
+    
 }

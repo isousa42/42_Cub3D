@@ -39,5 +39,6 @@ void    parse_ea(t_file *file, char **save, int x, int y);
 void    parse_s(t_file *file, char **save, int x, int y);
 void    parse_f(t_file *file, char **save, int x, int y);
 void    parse_c(t_file *file, char **save, int x, int y);
+void    parse_map(t_file *file, char **save, int x, int y);
 
 #endif

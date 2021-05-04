@@ -9,7 +9,7 @@ void    parse_file(t_file *file, char **save)
 
     x = 0;
     y = 0;
-    while(x <= 34)
+    while(save[x] != 0)
     {
         if (save[x][y] == 'R')
             parse_r(file, save, x, y);
@@ -28,7 +28,7 @@ void    parse_file(t_file *file, char **save)
         if (save[x][y] == 'C')
             parse_c(file, save, x, y);
         if (save[x][y] == '1')
-            parse_map(file, save[x], x, y);
+            parse_map(file, save, x, y);
         if (!save)
             break;
         else 
