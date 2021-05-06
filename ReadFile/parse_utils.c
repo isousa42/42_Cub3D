@@ -161,7 +161,7 @@ int     count_lines_map(char **save, int x)
     return (counter);
 }
 
-void    parse_map(t_file *file, char **save, int x, int y)
+void   parse_map(t_file *file, char **save, int x, int y)
 {
     char **map;
     int i;
@@ -174,8 +174,9 @@ void    parse_map(t_file *file, char **save, int x, int y)
     while (save[x])
     {
         map[i] = ft_strdup(save[x]);
+        printf("%s\n", map[i]);
         x++;
         i++;
     }
-    
+    printf(" ===== %i", x);
 }

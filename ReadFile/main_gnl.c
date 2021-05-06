@@ -28,7 +28,10 @@ void    parse_file(t_file *file, char **save)
         if (save[x][y] == 'C')
             parse_c(file, save, x, y);
         if (save[x][y] == '1')
+        {
             parse_map(file, save, x, y);
+            break ;
+        }
         if (save[x] == 0)
             break;
         else 
@@ -60,7 +63,7 @@ int main()
     line = NULL;
 
     fd = open("cub3d.cub", O_RDONLY);
-    save = malloc(sizeof(char *) * (34));
+    save = (char **)malloc(sizeof(char *) * (34));
 	if (!save)
 		return (0);
     while ((ret = get_next_line(fd, &line)) > 0)
