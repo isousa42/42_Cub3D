@@ -21,6 +21,14 @@ typedef struct s_file
 
 }       t_file;
 
+typedef struct s_list
+{
+    void *content;
+    struct s_list *next;
+
+}       t_list;
+
+
 int		get_next_line(int fd, char **line);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strchr(char *s, char c);
@@ -29,16 +37,19 @@ char	*ft_substr(char *s, int start, int len);
 int		ft_strlen(char *str);
 int     ft_isdigit(int c);
 int     ft_isalpha(int c);
+int     ft_iswall(char c);
 
 //parse_utils.c
-void    parse_r(t_file *file, char **save, int x, int y);
-void    parse_no(t_file *file, char **save, int x, int y);
-void    parse_so(t_file *file, char **save, int x, int y);
-void    parse_we(t_file *file, char **save, int x, int y);
-void    parse_ea(t_file *file, char **save, int x, int y);
-void    parse_s(t_file *file, char **save, int x, int y);
-void    parse_f(t_file *file, char **save, int x, int y);
-void    parse_c(t_file *file, char **save, int x, int y);
-void    parse_map(t_file *file, char **save, int x);
+int    parse_r(t_file *file, char *line);
+void    parse_variable(t_file *file, char *line, int control);
+void    parse_flags(char *save, t_file *file, int control);
+int    parse_f(t_file *file, char *line);
+int    parse_c(t_file *file, char *line);
+
+// list_utils.c
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+t_list	*ft_lstnew(void *content);
+int	ft_lstsize(t_list *lst);
 
 #endif

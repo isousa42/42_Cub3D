@@ -1,156 +1,5 @@
 #include "gnl.h"
 
-void    parse_file(t_file *file, char **save)
-{
-    file->flagRY = 0;
-    file->flagRY = 0;
-    int y;
-    int x;
-
-    x = 0;
-    y = 0;
-    while(save[x] != 0)
-    {
-        if (save[x][y] == 'R')
-            parse_r(file, save, x, y);
-        else if (save[x][y] == 'N' && save[x][y + 1] == 'O')
-            parse_no(file, save, x, y);
-        else if (save[x][y] == 'S' && save[x][y + 1] == 'O')
-            parse_so(file, save, x, y);
-        else if (save[x][y] == 'W' && save[x][y + 1] == 'E')
-            parse_we(file, save, x, y);
-        else if (save[x][y] == 'E' && save[x][y + 1] == 'A')
-            parse_ea(file, save, x, y);
-        else if (save[x][y] == 'S' && save[x][y + 1] == ' ')
-            parse_s(file, save, x, y);
-        else if (save[x][y] == 'F')
-            parse_f(file, save, x, y);
-        else if (save[x][y] == 'C')
-            parse_c(file, save, x, y);
-        else
-        {
-            parse_map(file, save, x);
-            break;
-        }
-        x++;
-    }
-}
-
-int     check_error(char **save)
-{
-    int x;
-    int y;
-    
-    x = 0;
-    y = 0;
-    while(1)
-    {
-        y = 0;
-        if (save[x][y] == 'R')
-        {
-            y++;
-            if(save[x][y] != ' ')
-                return (-1);
-            else
-                y++;
-            while (ft_isdigit(save[x][y]) == 1)
-                y++;
-            if(save[x][y] != ' ' && save[x][y] != ',')
-                return (-1);
-            else
-                y++;
-            while (ft_isdigit(save[x][y]) == 1)
-                y++;
-            if (save[x][y] != 0)
-                return (-1);
-        }
-        else if (save[x][y] == 'N' && save[x][y + 1] == 'O')
-        {
-            y = y + 3;
-            if(save[x][y] != '.' && save[x][y + 1] != '/')
-                return (-1);
-        }
-        else if (save[x][y] == 'S' && save[x][y + 1] == 'O')
-        {
-            y = y + 3;
-            if(save[x][y] != '.' && save[x][y + 1] != '/')
-                return (-1);
-        }
-        else if (save[x][y] == 'W' && save[x][y + 1] == 'E')
-        {
-            y = y + 3;
-            if(save[x][y] != '.' && save[x][y + 1] != '/')
-                return (-1);
-        }
-        else if (save[x][y] == 'E' && save[x][y + 1] == 'A')
-        {
-            y = y + 3;
-            if(save[x][y] != '.' && save[x][y + 1] != '/')
-                return (-1);
-        }
-        else if (save[x][y] == 'S' && save[x][y + 1] == ' ')
-        {
-            y = y + 2;
-            if(save[x][y] != '.' && save[x][y + 1] != '/')
-                return (-1);
-        }
-        else if (save[x][y] == 'F')
-        {
-            y++;
-            if(save[x][y] != ' ')
-                return (-1);
-            else
-                y++;
-            while (ft_isdigit(save[x][y]) == 1)
-                y++;
-            if(save[x][y] != ' ' && save[x][y] != ',')
-                return (-1);
-            else
-                y++;
-            while (ft_isdigit(save[x][y]) == 1)
-                y++;
-            if(save[x][y] != ' ' && save[x][y] != ',')
-                return (-1);
-            else
-                y++;
-            while (ft_isdigit(save[x][y]) == 1)
-                y++;
-            printf("%c", save[x][y]);
-            if (save[x][y] != 0)
-                return (-1);
-        }
-        else if (save[x][y] == 'C')
-        {
-            y++;
-            if(save[x][y] != ' ')
-                return (-1);
-            else
-                y++;
-            while (ft_isdigit(save[x][y]) == 1)
-                y++;
-            if(save[x][y] != ' ' && save[x][y] != ',')
-                return (-1);
-            else
-                y++;
-            while (ft_isdigit(save[x][y]) == 1)
-                y++;
-            if(save[x][y] != ' ' && save[x][y] != ',')
-                return (-1);
-            else
-                y++;
-            while (ft_isdigit(save[x][y]) == 1)
-                y++;
-            printf("%c", save[x][y]);
-            if (save[x][y] != 0)
-                return (-1);
-        }
-        if (save[x][y] == '1')
-            return (0);
-        x++;
-
-    }
-    return (0);
-}
 
 int main()
 {
@@ -161,29 +10,80 @@ int main()
     char *line;
     char **save;
     t_file file;
+    int control;
+    t_list *lista = NULL;
+
+
 
     x = 0;
     ret = 0;
     line = NULL;
-
+    control = 0;
     fd = open("cub3d.cub", O_RDONLY);
     save = (char **)malloc(sizeof(char *) * (40));
 	if (!save)
 		return (0);
     while ((ret = get_next_line(fd, &line)) > 0)
     {
-        save[x] = ft_strdup(line);
-        x++;
-        free(line);
+        if (line[0] == 'R')
+            control = parse_r(&file, line);
+        else if (line[0] == 'N' && line[1] == 'O')
+            parse_variable(&file, line, 1);
+        else if (line[0] == 'S' && line[1] == 'O')
+            parse_variable(&file, line, 2);
+        else if (line[0] == 'W' && line[1] == 'E')
+            parse_variable(&file, line, 3);
+        else if (line[0] == 'E' && line[1] == 'A')
+            parse_variable(&file, line, 4);
+        else if (line[0] == 'S' && line[1] == ' ')
+            parse_variable(&file, line, 5);
+        else if (line[0] == 'F')
+            control = parse_f(&file, line);
+        else if (line[0] == 'C')
+            control = parse_c(&file, line);
+        else
+            ft_lstadd_back(&lista, ft_lstnew((void *)line));
     }
-    save[x] = "\0";
-    close(fd);
 
-    if (check_error(save) == -1)
+    close(fd);
+    int y;
+    int size = ft_lstsize(lista);
+    save = (char **)malloc(sizeof(char *) * size);
+    while (lista != NULL)
     {
-        printf("error");
-        return 0;
+        save[x] = ft_strdup(lista->content);
+        lista = lista->next;
+        x++;
     }
-    parse_file(&file, save);
+
+    x = 0;
+    int z = 0;
+    while (x < size)
+    {
+        y = 0;
+        while (y < ft_strlen(save[x]))
+        {
+            if (x == 0 || y == 0)
+            {
+                if (ft_iswall(save[x][y]) == 0)
+                    printf("ERROR");
+                if (save[x][y] == ' ')
+                {
+                    z = 0;
+                    while (save[x][z] == ' ')
+                        z++;
+                    if (save[x][z] != '1')
+                        printf("ERROR");
+                }
+            }
+            y++;
+        }
+        x++;
+    }
+
+
+
+
+
     return 0;
 }
