@@ -50,7 +50,7 @@ int    parse_c(t_file *file, char *line);
 int     check_sides_one(char **save, int size);
 int     check_inside(char **save, int size);
 int     check_letters(char **save, int size);
-int     check_close(char **save, int size);
+
 
 // list_utils.c
 void	ft_lstadd_back(t_list **lst, t_list *new);

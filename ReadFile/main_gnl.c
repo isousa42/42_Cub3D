@@ -59,20 +59,31 @@ int main()
     int error_side;
     int error_inside;
     int counter_letters;
-    int error_close;
+
+    int start_map;
+    int y;
+
+    start_map = 0;
+    x = 0;
+    y = 0;
+    while (x < size)
+    {
+        while (save[x] == NULL)
+            start_map++;
+        x++;
+    }
+    printf("%d\n", start_map);
 
     error_side = check_sides_one(save, size);
     printf("ERROR SIDE = %d\n", error_side);
-
     error_inside = check_inside(save, size);
     printf("ERROR INSIDE = %d\n", error_inside);
-
     counter_letters = check_letters(save, size);
     printf("COUNTER = %d\n", counter_letters);
 
-    error_close = check_close(save, size);
-    printf("ERROR CLOSE = %d\n", error_close);
+
     
+
     return 0;
 }
 
