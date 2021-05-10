@@ -6,16 +6,12 @@ int main()
     // SAVING ALL INFORMATION IN THE FILE IN THE MATRIX **save
     int fd;
     int ret;
-    int x;
     char *line;
     char **save;
     t_file file;
     int control;
     t_list *lista = NULL;
 
-
-
-    x = 0;
     ret = 0;
     line = NULL;
     control = 0;
@@ -44,10 +40,14 @@ int main()
         else
             ft_lstadd_back(&lista, ft_lstnew((void *)line));
     }
-
     close(fd);
-    int y;
-    int size = ft_lstsize(lista);
+
+
+    int x;
+    int size;
+
+    x = 0;
+    size = ft_lstsize(lista);
     save = (char **)malloc(sizeof(char *) * size);
     while (lista != NULL)
     {
@@ -56,34 +56,23 @@ int main()
         x++;
     }
 
-    x = 0;
-    int z = 0;
-    while (x < size)
-    {
-        y = 0;
-        while (y < ft_strlen(save[x]))
-        {
-            if (x == 0 || y == 0)
-            {
-                if (ft_iswall(save[x][y]) == 0)
-                    printf("ERROR");
-                if (save[x][y] == ' ')
-                {
-                    z = 0;
-                    while (save[x][z] == ' ')
-                        z++;
-                    if (save[x][z] != '1')
-                        printf("ERROR");
-                }
-            }
-            y++;
-        }
-        x++;
-    }
+    int error_side;
+    int error_inside;
+    int counter_letters;
+    int error_close;
 
+    error_side = check_sides_one(save, size);
+    printf("ERROR SIDE = %d\n", error_side);
 
+    error_inside = check_inside(save, size);
+    printf("ERROR INSIDE = %d\n", error_inside);
 
+    counter_letters = check_letters(save, size);
+    printf("COUNTER = %d\n", counter_letters);
 
-
+    error_close = check_close(save, size);
+    printf("ERROR CLOSE = %d\n", error_close);
+    
     return 0;
 }
+

@@ -46,6 +46,12 @@ void    parse_flags(char *save, t_file *file, int control);
 int    parse_f(t_file *file, char *line);
 int    parse_c(t_file *file, char *line);
 
+//check_errors.c
+int     check_sides_one(char **save, int size);
+int     check_inside(char **save, int size);
+int     check_letters(char **save, int size);
+int     check_close(char **save, int size);
+
 // list_utils.c
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstlast(t_list *lst);
