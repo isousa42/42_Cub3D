@@ -16,13 +16,12 @@ int main()
     line = NULL;
     control = 0;
     fd = open("cub3d.cub", O_RDONLY);
-    save = (char **)malloc(sizeof(char *) * (40));
-	if (!save)
-		return (0);
     while ((ret = get_next_line(fd, &line)) > 0)
     {
         if (line[0] == 'R')
-            control = parse_r(&file, line);
+        {
+            parse_r(&file, line);
+        }
         else if (line[0] == 'N' && line[1] == 'O')
             parse_variable(&file, line, 1);
         else if (line[0] == 'S' && line[1] == 'O')
@@ -34,9 +33,9 @@ int main()
         else if (line[0] == 'S' && line[1] == ' ')
             parse_variable(&file, line, 5);
         else if (line[0] == 'F')
-            control = parse_f(&file, line);
+            parse_f(&file, line);
         else if (line[0] == 'C')
-            control = parse_c(&file, line);
+            parse_c(&file, line);
         else
             ft_lstadd_back(&lista, ft_lstnew((void *)line));
     }
@@ -56,30 +55,8 @@ int main()
         x++;
     }
 
-    int error_side;
-    int error_inside;
-    int counter_letters;
-
-    int start_map;
-    int y;
-
-    start_map = 0;
-    x = 0;
-    y = 0;
-    while (x < size)
-    {
-        while (save[x] == NULL)
-            start_map++;
-        x++;
-    }
-    printf("%d\n", start_map);
-
-    error_side = check_sides_one(save, size);
-    printf("ERROR SIDE = %d\n", error_side);
-    error_inside = check_inside(save, size);
-    printf("ERROR INSIDE = %d\n", error_inside);
-    counter_letters = check_letters(save, size);
-    printf("COUNTER = %d\n", counter_letters);
+    check_errors_map(save, size);
+    
 
 
     

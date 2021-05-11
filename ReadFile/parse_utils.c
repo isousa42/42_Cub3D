@@ -31,18 +31,12 @@ void    parse_flags(char *save, t_file *file, int control)
         file->flagS = save;
 }
 
-int    parse_r(t_file *file, char *line)
+void    parse_r(t_file *file, char *line)
 {
     int y;
 
-    y = 1;
-    while (line[y])
-    {
-        if (ft_isdigit(line[y] == 0 || line[y] == ' '))
-            return (-1);
-        y++;
-    }
     y = 0;
+    check_resolution(line);
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
@@ -57,24 +51,16 @@ int    parse_r(t_file *file, char *line)
         file->flagRY = (file->flagRY * 10) + (line[y] - '0');
         y++;
     }
-    
-    return (0);
 }
 
-int    parse_f(t_file *file, char *line)
+void    parse_f(t_file *file, char *line)
 {
     int r = 0;
     int g = 0;
     int b = 0;
     int y;
 
-    y = 1;
-    while (line[y])
-    {
-        if (ft_isdigit(line[y] == 0 || line[y] == ' '))
-            return (-1);
-        y++;
-    }
+    check_c_f(line);
     y = 0;
     while (ft_isdigit(line[y]) == 0)
         y++;
@@ -97,52 +83,49 @@ int    parse_f(t_file *file, char *line)
         b = (b * 10) + (line[y] - '0');
         y++;
     }
+    if (r > 255 || b > 255 || g > 255)
+        printf("ERROR");
     file->flagF[0] = r;
     file->flagF[1] = g;
     file->flagF[2] = b;
-    return (0);
 }
 
-int    parse_c(t_file *file, char *line)
+void    parse_c(t_file *file, char *line)
 {
-    int r2 = 0;
-    int g2 = 0;
-    int b2 = 0;
+    int r = 0;
+    int g = 0;
+    int b = 0;
     int y;
 
-    y = 1;
-    while (line[y])
-    {
-        if (ft_isdigit(line[y] == 0 || line[y] == ' '))
-            return (-1);
-        y++;
-    }
+    check_c_f(line);
     y = 0;
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
     {
-        r2 = (r2 * 10) + (line[y] - '0');
+        r = (r * 10) + (line[y] - '0');
         y++;
     }
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
     {
-        g2 = (g2 * 10) + (line[y] - '0');
+        g = (g * 10) + (line[y] - '0');
         y++;
     }
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
     {
-        b2 = (b2 * 10) + (line[y] - '0');
+        b = (b * 10) + (line[y] - '0');
         y++;
     }
-    file->flagC[0] = r2;
-    file->flagC[1] = g2;
-    file->flagC[2] = b2;
-
-    return (0);
+    if (r > 255 || b > 255 || g > 255)
+        printf("ERROR");
+    file->flagC[0] = r;
+    file->flagC[1] = g;
+    file->flagC[2] = b;
 }
+
+// SEG FAULT IF NOT 3 NUMBERS IN THE C FLAG ON THE FILE ! DONT KNOW WHY...
 

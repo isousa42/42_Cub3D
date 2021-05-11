@@ -40,16 +40,24 @@ int     ft_isalpha(int c);
 int     ft_iswall(char c);
 
 //parse_utils.c
-int    parse_r(t_file *file, char *line);
+void    parse_r(t_file *file, char *line);
 void    parse_variable(t_file *file, char *line, int control);
 void    parse_flags(char *save, t_file *file, int control);
-int    parse_f(t_file *file, char *line);
-int    parse_c(t_file *file, char *line);
+void    parse_f(t_file *file, char *line);
+void    parse_c(t_file *file, char *line);
 
-//check_errors.c
-int     check_sides_one(char **save, int size);
+//check_errors_map.c
+int     check_outside(char **save, int size);
 int     check_inside(char **save, int size);
 int     check_letters(char **save, int size);
+int     check_close(char **save, int size);
+void    check_errors_map(char **save, int size);
+int     start_map(char **save);
+int     counter_map(char **save, int first, int size);
+
+//check_errors_var.c
+int     check_resolution(char *line);
+int     check_c_f(char *line);
 
 
 // list_utils.c
