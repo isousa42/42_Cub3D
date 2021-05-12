@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "memory": "c",
-        "utility": "c"
+        "utility": "c",
+        "ios": "c"
     }
 }
