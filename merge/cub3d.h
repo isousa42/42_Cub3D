@@ -110,7 +110,7 @@ typedef struct s_info
 	t_keys keys;
 	t_rc rc;
 	int map[mapWidth][mapHeight];
-	int	**buff;
+	int	buff[1000][1000];
 	int	**texture;
 	double posX;
 	double posY;

@@ -47,10 +47,10 @@ int main()
 {
 	t_info info;
 	info.mlx = mlx_init();
-    info.width = 1920;
-	info.height = 1024;
+    info.width = 1000;
+	info.height = 1000;
 
-    
+    ft_init_info(&info);
 	init_map(&info);
 
 	//initialize the variables of the info struct
@@ -59,12 +59,12 @@ int main()
     
 	//Create buff and textures
 	ft_handle_text(&info);
-    ft_init_info(&info);
     
-	info.win = mlx_new_window(info.mlx, 1920, 1024, "mlx");
+    
+	info.win = mlx_new_window(info.mlx, 1000, 1000, "mlx");
     
 	// Creating the image
-	info.img.img = mlx_new_image(info.mlx, 1920, 1024);
+	info.img.img = mlx_new_image(info.mlx, 1000, 1000);
 	info.img.data = (int *)mlx_get_data_addr(info.img.img, &info.img.bpp, &info.img.size, &info.img.endian);
     
 	mlx_loop_hook(info.mlx, &first_loop, &info);

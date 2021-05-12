@@ -84,6 +84,7 @@ int	ft_handle_text(t_info *info)
 	j = 0;
 	while (i < 8)
 	{
+		j = 0;
 		while (j < textHeight * textWidth)
 		{
 			info->texture[i][j] = 0;

@@ -2,13 +2,21 @@
 
 void	draw_img(t_info *info)
 {
-	for (int y = 0; y < info->height; y++)
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < info->height)
 	{
-		for (int x = 0; x < info->width; x++)
+		x = 0;
+		while (x < info->width)
 		{
 			info->img.data[y * info->width + x] = info->buff[y][x];
+			x++;
 		}
+		y++;
 	}
+	printf("CHEGOU");
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
 	
 }

@@ -23,10 +23,10 @@ void    ft_init_info(t_info *info)
 	// Width and Height of the window
 	
 
-	info->buff = calloc(1024, sizeof(int *));
-	i = -1;
-	while (++i < 1024)
-		info->buff[i] = calloc(1920, sizeof(int *));
+	// info->buff = calloc(1000, sizeof(int *));
+	// i = -1;
+	// while (++i < 1000)
+	// 	info->buff[i] = calloc(1000, sizeof(int *));
 	// i = 0;
 	// info->buff = (int **)malloc(sizeof(int *) * info->height);
 	// while (i < info->height)
