@@ -1,5 +1,10 @@
 #include "cub3d.h"
 
+int		create_rgb(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
+}
+
 void	floor_init(t_info *info)
 {
 	//rayDir for the leftmost ray (x = 0) and ridhtmost ray (x=w)
@@ -46,18 +51,19 @@ void	floor_calculations(t_info *info)
 	info->rc.ceilingText = 6;
 }
 
-void	floor_setup(t_info *info)
+void	floor_setup(t_info *info)  // CHANGES HERE FOR THE MANDATORY PART!!!!!
 {
 	//floor
-	info->rc.color = info->texture[info->rc.floorText][textWidth * info->rc.ty + info->rc.tx];
-	info->rc.color = (info->rc.color >> 1) & 8355711; //make a bit darker
-	info->buff[info->rc.y][info->rc.k] = info->rc.color;
+	// info->rc.color = info->texture[info->rc.floorText][textWidth * info->rc.ty + info->rc.tx];
+	// info->rc.color = (info->rc.color >> 1) & 8355711; //make a bit darker
+
+	info->buff[info->rc.y][info->rc.k] = info->rgb_floor; // CHANGED HERE FOR 255 = BLUE
 
 	//ceiling (symmetrical, at screenHeight - y - 1 instead of y)
-	info->rc.color = info->texture[info->rc.ceilingText][textWidth * info->rc.ty + info->rc.tx];
-	info->rc.color = (info->rc.color >> 1) & 8355711; //(make a bit darker)
+	// info->rc.color = info->texture[info->rc.ceilingText][textWidth * info->rc.ty + info->rc.tx];
+	// info->rc.color = (info->rc.color >> 1) & 8355711; //(make a bit darker)
 
-	info->buff[info->height - info->rc.y - 1][info->rc.k] = info->rc.color;
+	info->buff[info->height - info->rc.y - 1][info->rc.k] = info->rgb_ceiling; // CHANGED HERE FOR 0 = BLACK
 }
 
 void    floor_draw(t_info *info)

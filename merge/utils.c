@@ -16,7 +16,7 @@ void	draw_img(t_info *info)
 		}
 		y++;
 	}
-	printf("CHEGOU");
+	//printf("CHEGOU");
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
 	
 }

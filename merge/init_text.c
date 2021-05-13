@@ -45,38 +45,37 @@ int	ft_handle_text(t_info *info)
 	// Creating the buffer - With the textures, the vertical stripes can not be drawn with the vertical line command anymore, 
 	//instead every pixel has to be drawn separetely. So we need a 2D array, used as ascreen buffer, 
 	// and copy it to the screen at once, already with the texture. It goes a lot faster, than drawing pixel by pixel. 
-	// // if (!(info->buff = (int **)malloc(sizeof(int *) * info->height)))
-	// // 	return (1);
-	// // while (i < info->height)
-	// // {
-	// // 	if(!(info->buff[i] = (int *)malloc(sizeof(int *) * info->width)))
-	// // 		return (1);
-	// // 	i++;
-	// // }
-	// // i = 0;
-	// // while (i < info->height)
-	// // {
-	// // 	j = 0;
-	// // 	while (j < info->width)
-	// // 	{
-	// // 		info->buff[i][j] = 0;
-	// // 		j++;
-	// // 	}
-	// // 	i++;
-	// // }
-	// info->buff = ft_calloc(1024, sizeof(int *));
-	// i = -1;
-	// while (++i < 1024)
-	// 	info->buff[i] = ft_calloc(1920, sizeof(int *));
+	if (!(info->buff = (int **)malloc(sizeof(int **) * info->height)))
+		return (1);
+	while (i < info->height)
+	{
+		//printf("ADDING A ROW %i\n", i);
+		if(!(info->buff[i] = (int *)malloc(sizeof(int *) * info->width)))
+			return (1);
+		i++;
+	}
+	
+	i = 0;
+	while (i < info->height)
+	{
+		j = 0;
+		while (j < info->width)
+		{
+			info->buff[i][j] = 0;
+			//printf("%d - %d\n", info->buff[i][j], i);
+			j++;
+		}
+		i++;
+	}
 	// Allocating memory for the textures and load the textures. Since the buffer fuction works 
 	//with single integer valus for colors (instead of 3 separate bytes for RGB), the textures are stored 
 	//in this format as well. 
 	i = 0;
-	if (!(info->texture = (int **)malloc(sizeof(int *) * 8)))
+	if (!(info->texture = (int **)malloc(sizeof(int **) * 8)))
 		return (1);
 	while (i < 8)
 	{
-		if (!(info->texture[i] = (int *)malloc(sizeof(int) * (textHeight * textWidth))))
+		if (!(info->texture[i] = (int *)malloc(sizeof(int *) * (textHeight * textWidth))))
 			return (1);
 		i++;
 	}
@@ -116,30 +115,15 @@ void init_map(t_info *info)
 {
 	int world_map[mapWidth][mapHeight]=
 	{
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		{8,0,0,0,0,0,0,0,0,0,8,4,0,0,0,0,0,0,0,0,0,0,0,4},
-		{8,0,3,3,0,0,0,0,0,8,8,4,0,0,0,0,0,0,0,0,0,0,0,6},
-		{8,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6},
-		{8,0,3,3,0,0,0,0,0,8,8,4,0,0,0,0,0,0,0,0,0,0,0,4},
-		{8,0,0,0,0,0,0,0,0,0,8,4,0,0,0,0,0,6,6,6,0,6,4,6},
-		{8,8,8,8,0,8,8,8,8,8,8,4,4,4,4,4,4,6,0,0,0,0,0,6},
-		{7,7,7,7,0,7,7,7,7,0,8,0,8,0,8,0,8,4,0,4,0,6,0,6},
-		{7,7,0,0,0,0,0,0,7,8,0,8,0,8,0,8,8,6,0,0,0,0,0,6},
-		{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,6,0,0,0,0,0,4},
-		{7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,6,0,6,0,6,0,6},
-		{7,7,0,0,0,0,0,0,7,8,0,8,0,8,0,8,8,6,4,6,0,6,6,6},
-		{7,7,7,7,0,7,7,7,7,8,8,4,0,6,8,4,8,3,3,3,0,3,3,3},
-		{2,2,2,2,0,2,2,2,2,4,6,4,0,0,6,0,6,3,0,0,0,0,0,3},
-		{2,2,0,0,0,0,0,2,2,4,0,0,0,0,0,0,4,3,0,0,0,0,0,3},
-		{2,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0,4,3,0,0,0,0,0,3},
-		{1,0,0,0,0,0,0,0,1,4,4,4,4,4,6,0,6,3,3,0,0,0,3,3},
-		{2,0,0,0,0,0,0,0,2,2,2,1,2,2,2,6,6,0,0,5,0,5,0,5},
-		{2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
-		{2,0,0,0,0,0,0,0,2,0,0,0,0,0,2,5,0,5,0,5,0,5,0,5},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5},
-		{2,0,0,0,0,0,0,0,2,0,0,0,0,0,2,5,0,5,0,5,0,5,0,5},
-		{2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
-		{2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
+		{5,5,5,2,2,5,5,5},
+		{5,0,0,0,0,0,0,5},
+		{5,0,0,0,0,0,0,5},
+		{5,0,0,0,0,0,0,5},
+		{5,0,0,0,0,0,0,5},
+		{5,0,0,0,0,0,0,5},
+		{5,0,0,0,0,0,0,5},
+		{5,5,5,5,5,5,5,5},
+		
 	};
 	ft_memcpy(info->map, world_map, sizeof(int) * (mapHeight * mapWidth));
 }

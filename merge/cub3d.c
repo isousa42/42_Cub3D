@@ -38,7 +38,6 @@ int	first_loop(t_info *info)
 	rc_loop(info);
 	draw_img(info);
 	key_hook(info);
-    
 
 	return (0);
 }
@@ -47,26 +46,30 @@ int main()
 {
 	t_info info;
 	info.mlx = mlx_init();
-    info.width = 1000;
-	info.height = 1000;
 
+	//initialize the variables
     ft_init_info(&info);
+	init_play_pos(&info);
+	init_key(&info);
 	init_map(&info);
+	int r = 220;
+	int g = 100;
+	int b = 0;
 
-	//initialize the variables of the info struct
-	
-    
-    
+	info.rgb_floor = create_rgb(r, g, b);
+	info.rgb_ceiling = create_rgb(b, g, r);
+
 	//Create buff and textures
 	ft_handle_text(&info);
     
-    
-	info.win = mlx_new_window(info.mlx, 1000, 1000, "mlx");
+	// Create the window
+	info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
     
 	// Creating the image
-	info.img.img = mlx_new_image(info.mlx, 1000, 1000);
+	info.img.img = mlx_new_image(info.mlx, info.width, info.height);
 	info.img.data = (int *)mlx_get_data_addr(info.img.img, &info.img.bpp, &info.img.size, &info.img.endian);
     
+	// LOOPS OF MLX
 	mlx_loop_hook(info.mlx, &first_loop, &info);
 	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
 	mlx_hook(info.win, 3, 0, &key_release, &info);

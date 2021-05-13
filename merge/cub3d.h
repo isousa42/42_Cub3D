@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define mapWidth 24
-#define mapHeight 24
+#define mapWidth 8
+#define mapHeight 8
 #define textWidth 64
 #define textHeight 64
 
@@ -110,7 +110,7 @@ typedef struct s_info
 	t_keys keys;
 	t_rc rc;
 	int map[mapWidth][mapHeight];
-	int	buff[1000][1000];
+	int	**buff;
 	int	**texture;
 	double posX;
 	double posY;
@@ -120,6 +120,11 @@ typedef struct s_info
 	double planeY;
 	double moveSpeed;
 	double rotSpeed;
+	//ceiling rgb
+	int rgb_ceiling;
+	//floor rgb
+	int rgb_floor;
+	
 	int width;
 	int height;
 }		t_info;
@@ -137,17 +142,20 @@ void	init_map(t_info *info);
 
 // init_info.c
 void    ft_init_info(t_info *info);
+void	init_play_pos(t_info *info);
 
 // keys.c
 int		key_release(int keycode, t_info *info);
 int		key_press(int keycode, t_info *info);
 int		key_hook(t_info *info);
+void	init_key(t_info *info);
 
 // floor.c
 void    floor_draw(t_info *info);
 void	floor_init(t_info *info);
 void	floor_calculations(t_info *info);
 void	floor_setup(t_info *info);
+int		create_rgb(int r, int g, int b);
 
 // wall.c
 
@@ -161,3 +169,6 @@ void	wall_text(t_info *info);
 void	draw_img(t_info *info);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_bzero(void *str, size_t n);
+
+
+

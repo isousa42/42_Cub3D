@@ -1,5 +1,14 @@
 #include "cub3d.h"
 
+void	init_key(t_info *info)
+{
+	info->keys.key_w = 0;
+	info->keys.key_s = 0;
+	info->keys.key_a = 0;
+	info->keys.key_d = 0;
+	info->keys.key_esc = 0;
+}
+
 int	key_release(int keycode, t_info *info)
 {
 	if (keycode == KEY_A)
