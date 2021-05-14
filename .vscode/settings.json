@@ -2,6 +2,7 @@
     "files.associations": {
         "memory": "c",
         "utility": "c",
-        "ios": "c"
+        "ios": "c",
+        "complex": "c"
     }
 }

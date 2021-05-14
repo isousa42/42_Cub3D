@@ -47,12 +47,20 @@ void    dda_algorithm(t_info *info)
 				info->rc.sideDistX += info->rc.deltaDistX;
 				info->rc.mapX += info->rc.stepX;
 				info->rc.side = 0;
+				if (info->rc.stepX == 1)
+					info->rc.side = 0;
+				else if (info->rc.stepX == -1)
+					info->rc.side = 1;
 			}
 			else
 			{
 				info->rc.sideDistY += info->rc.deltaDistY;
 				info->rc.mapY += info->rc.stepY;
 				info->rc.side = 1;
+				if (info->rc.stepY == 1)
+					info->rc.side = 2;
+				else if (info->rc.stepY == -1)
+					info->rc.side = 3;
 			}
 			//Check if the ray hits wall
 			if (info->map[info->rc.mapX][info->rc.mapY] > 0)
@@ -63,7 +71,7 @@ void    dda_algorithm(t_info *info)
 void	wall_calc(t_info *info)
 {
 	//Calculate distance of perpendicular ray (Euclidean distance will give the fisheye effect
-	if (info->rc.side == 0)
+	if (info->rc.side == 0 || info->rc.side == 1)
 		info->rc.perpWallDist = (info->rc.mapX - info->posX + (1 - info->rc.stepX) / 2) / info->rc.rayDirX;
 	else
 		info->rc.perpWallDist = (info->rc.mapY - info->posY + (1 - info->rc.stepY) / 2) / info->rc.rayDirY;
@@ -87,7 +95,7 @@ void	wall_text(t_info *info)
 	//The value wallX represents the exact value where the wall was hit. This is needed to know which x-coordinate of the texture we have to use. 
 	//This is calculated by first calculating the exact x and y coordinate in the world and then subtrating the integer value of the wall. 
 	//Even if it is called wallX, it's actually an y-coordinate of the wall if side == 1, but it's always the x-coordinate of the texture.
-	if (info->rc.side == 0)
+	if (info->rc.side == 0 || info->rc.side == 1)
 		info->rc.wallX = info->posY + info->rc.perpWallDist * info->rc.rayDirY;
 	else
 		info->rc.wallX = info->posX + info->rc.perpWallDist * info->rc.rayDirX;

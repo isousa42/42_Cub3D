@@ -23,9 +23,16 @@ void	rc_loop(t_info *info)
 			info->rc.textY = (int)info->rc.textPos & (textHeight - 1);
 			info->rc.textPos += info->rc.step;
 			info->rc.color = info->texture[info->rc.textNum][textHeight * info->rc.textY + info->rc.textX];
+
 			//make color darker for y-sides: R,G,B byte each divided through two with a shift and an and
-			if (info->rc.side == 1)
-				info->rc.color = (info->rc.color >> 1) & 8355711;
+			if (info->rc.side == 0)
+				info->rc.color = info->texture[0][textHeight * info->rc.textY + info->rc.textX];
+			else if (info->rc.side == 1)
+				info->rc.color = info->texture[1][textHeight * info->rc.textY + info->rc.textX];
+			else if (info->rc.side == 2)
+				info->rc.color = info->texture[2][textHeight * info->rc.textY + info->rc.textX];
+			else if (info->rc.side == 3)
+				info->rc.color = info->texture[3][textHeight * info->rc.textY + info->rc.textX];
 			info->buff[info->rc.y][info->rc.x] = info->rc.color;
 			info->rc.y++;
 		}
