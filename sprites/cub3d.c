@@ -30,7 +30,11 @@ void	rc_loop(t_info *info)
 			info->rc.y++;
 		}
 		info->rc.x++;
-	}
+		//NEW FOR SPRITES:
+		info->sprites.sprites_buff[info->rc.x] = info->rc.perpWallDist;
+		
+	} 
+	sprites_draw(info, 3, 3, 5);
 }
 
 int	first_loop(t_info *info)

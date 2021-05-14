@@ -102,6 +102,28 @@ typedef struct s_image
 	int	img_height;
 }		t_image;
 
+typedef struct s_sprites
+{
+	double *sprites_buff;
+	double inversion;
+	double depthX;
+	double depthY;
+	double screenX;
+	int spriteHeight;
+	int drawStartY;
+	int drawEndY;
+	int spriteWidth;
+	int drawStartX;
+	int drawEndX;
+	int sprite;
+	int textX;
+	int avoid_overflow;
+	int sprite_color;
+	int textY;
+	int move;
+
+}		t_sprites;
+
 typedef struct s_info
 {
 	void *mlx;
@@ -109,6 +131,7 @@ typedef struct s_info
 	t_image img;
 	t_keys keys;
 	t_rc rc;
+	t_sprites sprites;
 	int map[mapWidth][mapHeight];
 	int	**buff;
 	int	**texture;
@@ -124,6 +147,9 @@ typedef struct s_info
 	int rgb_ceiling;
 	//floor rgb
 	int rgb_floor;
+	//sprites
+	
+
 	
 	int width;
 	int height;
@@ -132,6 +158,7 @@ typedef struct s_info
 // cub3d.c
 void	rc_loop(t_info *info);
 int		first_loop(t_info *info);
+
 
 // init_test.c
 int		ft_handle_text(t_info *info);
@@ -164,6 +191,10 @@ void    ray_walking(t_info *info);
 void    dda_algorithm(t_info *info);
 void	wall_calc(t_info *info);
 void	wall_text(t_info *info);
+
+// sprites.c
+void	sprites_draw(t_info *info, double spriteX, double spriteY, int texture);
+
 
 //utils.c
 void	draw_img(t_info *info);

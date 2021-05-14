@@ -18,6 +18,13 @@ void    ft_init_info(t_info *info)
 	info->buff = NULL;
 	info->texture = NULL;
 
+	info->sprites.sprites_buff = (double *)malloc(sizeof(double *) * info->width);
+	i = 0;
+	while(i < info->width)
+	{
+		info->sprites.sprites_buff[i] = 0;
+		i++;
+	}
 
 }
 

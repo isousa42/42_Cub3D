@@ -8,7 +8,7 @@ HEADER = cub3d.h
 INCLUDE = ../include
 MLX = /usr/local/lib
 LFLAGS = -lmlx -framework OPENGL -framework AppKit -g
-SRCS	= cub3d.c init_text.c init_info.c keys.c floor.c wall.c utils.c
+SRCS	= cub3d.c init_text.c init_info.c keys.c floor.c wall.c utils.c sprites.c
 
 OBJS	= $(SRCS:.c=.o)
 
