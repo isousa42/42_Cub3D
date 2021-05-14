@@ -1,4 +1,4 @@
-#include "gnl.h"
+#include "cub3d.h"
 
 static int	ft_strsave(int fd, char **line, char **store)
 {

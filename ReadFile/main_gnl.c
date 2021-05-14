@@ -9,13 +9,11 @@ int main()
     char *line;
     char **save;
     t_file file;
-    int control;
     t_list *lista = NULL;
 
     ret = 0;
     line = NULL;
-    control = 0;
-    fd = open("cub3d.cub", O_RDONLY);
+    fd = open("file.cub", O_RDONLY);
     while ((ret = get_next_line(fd, &line)) > 0)
     {
         if (line[0] == 'R')
@@ -56,9 +54,6 @@ int main()
     }
 
     check_errors_map(save, size);
-    
-
-
     
 
     return 0;

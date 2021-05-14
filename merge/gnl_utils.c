@@ -1,4 +1,4 @@
-#include "gnl.h"
+#include "cub3d.h"
 
 int		ft_strlen(char *str)
 {
