@@ -90,7 +90,7 @@ void	wall_calc(t_info *info)
 
 void	wall_text(t_info *info)
 {
-	info->rc.textNum = info->map[info->rc.mapX][info->rc.mapY] - 1; // this variable is the value of the current map square minus 1, because there is the texture zero, but in the map the 0 has no texture. To be able to use the texture number zero, we need to subtract 1.
+	//info->rc.textNum = info->map[info->rc.mapX][info->rc.mapY] - 1; // this variable is the value of the current map square minus 1, because there is the texture zero, but in the map the 0 has no texture. To be able to use the texture number zero, we need to subtract 1.
 
 	//The value wallX represents the exact value where the wall was hit. This is needed to know which x-coordinate of the texture we have to use. 
 	//This is calculated by first calculating the exact x and y coordinate in the world and then subtrating the integer value of the wall. 

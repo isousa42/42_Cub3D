@@ -46,7 +46,7 @@ void	floor_calculations(t_info *info)
 	info->rc.floorX += info->rc.floorStepX;
 	info->rc.floorY += info->rc.floorStepY;
 
-	//choose texture and draw the pixel
+	//choose texture and draw the pixel FOR BONUS!!!
 	info->rc.floorText = 3;
 	info->rc.ceilingText = 6;
 }

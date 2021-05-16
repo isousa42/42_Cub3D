@@ -2,22 +2,20 @@
 
 void    ft_init_info(t_info *info)
 {
-	int i = 2;
-	int j = 2;
+	// int i = 2.5;
+	// int j = 2.5;
 
-    info->posX = i;
-	info->posY = j;
+    // info->posX = 2.5;
+	// info->posY = 2.5;
 
 	// Speed of the moves
 	info->moveSpeed = 0.03;
 	info->rotSpeed = 0.03;
 
-	// Width and Height of the window
-	info->width = 1000;
-	info->height = 1000;
 	info->buff = NULL;
 	info->texture = NULL;
-
+	
+	int i;
 	info->sprites.sprites_buff = (double *)malloc(sizeof(double *) * info->width);
 	i = 0;
 	while(i < info->width)

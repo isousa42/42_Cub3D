@@ -3,8 +3,8 @@
 void	sprites_draw(t_info *info, double spriteX, double spriteY, int texture)
 {
 	//translate sprite position to relative to camera
-		spriteX = spriteX - info->posX;
-		spriteY = spriteY - info->posY;
+		spriteX = (spriteX + 0.5) - info->posX;
+		spriteY = (spriteY + 0.5) - info->posY;
 
 		//transform sprite with the inverse camera matrix
 		// [ planeX   dirX ] -1                                       [ dirY      -dirX ]
@@ -39,7 +39,7 @@ void	sprites_draw(t_info *info, double spriteX, double spriteY, int texture)
 		//loop through every vertical stripe of the sprite on screen
 		for(info->sprites.sprite = info->sprites.drawStartX; info->sprites.sprite < info->sprites.drawEndX; info->sprites.sprite++)
 		{
-			info->sprites.textX = (int)((256 * (info->sprites.sprite - (-info->sprites.spriteWidth / 2 + info->sprites.screenX)) * textWidth/ info->sprites.spriteWidth) / 256);
+			info->sprites.textX = (int)((256 * (info->sprites.sprite - (-info->sprites.spriteWidth / 2 + info->sprites.screenX)) * textWidth / info->sprites.spriteWidth) / 256);
 			//the conditions in the if are:
 			//1) it's in front of camera plane so you don't see things behind you
 			//2) it's on the screen (left)

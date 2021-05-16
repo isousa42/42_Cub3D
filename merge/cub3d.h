@@ -20,6 +20,13 @@
 #define KEY_D 2
 #define KEY_ESC 53
 
+typedef struct s_list
+{
+    void *content;
+    struct s_list *next;
+
+}       t_list;
+
 typedef struct s_rc
 {
 	int j;
@@ -133,7 +140,8 @@ typedef struct s_info
 	t_keys keys;
 	t_rc rc;
 	t_sprites sprites;
-	int map[mapWidth][mapHeight];
+	int map[mapHeight][mapWidth];
+	//int **map;
 	int	**buff;
 	int	**texture;
 	double posX;
@@ -148,12 +156,21 @@ typedef struct s_info
 	int rgb_ceiling;
 	//floor rgb
 	int rgb_floor;
+
+	int size_list;
+	int size;
+	int start;
 	
 
-	int flagRX;
-	int flagRY;
+	int     flagF[3];
+    int     flagC[3];
+	char    *flagNO;
+    char    *flagSO;
+    char    *flagWE;
+    char    *flagEA;
+    char    *flagS;
 	
-
+	char **save;
 	
 	int width;
 	int height;
@@ -216,3 +233,15 @@ int	ft_isdigit(int c);
 int	ft_isalpha(int c);
 int	ft_iswall(char c);
 int			get_next_line(int fd, char **line);
+int     check_resolution(char *line);
+void    parse_r(t_info *info, char *line);
+void    parse_f(t_info *info, char *line);
+void    parse_c(t_info *info, char *line);
+int     check_c_f(char *line);
+void    parse_variable(t_info *info, char *line, int control);
+void    parse_flags(t_info *info,char *save, int control);
+
+int	ft_lstsize(t_list *lst);
+t_list	*ft_lstnew(void *content);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstadd_back(t_list **lst, t_list *new);
