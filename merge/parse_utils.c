@@ -3,11 +3,16 @@
 void    parse_r(t_info *info, char *line)
 {
     int y;
-
     info->width = 0;
 	info->height = 0;
+
+    
     y = 0;
-    check_resolution(line);
+    if (check_resolution(line) == -1)
+    {
+        printf("ERROR = RESOLUTION HAS A PROBLEM! CHANGE IT (please).");
+        exit(0);
+    }
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
@@ -31,7 +36,11 @@ void    parse_f(t_info *info, char *line)
     int b = 0;
     int y;
 
-    check_c_f(line);
+    if (check_c_f(line) == -1)
+    {
+        printf("ERROR = FLOOR HAS A PROBLEM! CHANGE IT (please).");
+        exit(0);
+    }
     y = 0;
     while (ft_isdigit(line[y]) == 0)
         y++;
@@ -68,7 +77,11 @@ void    parse_c(t_info *info, char *line)
     int b = 0;
     int y;
 
-    check_c_f(line);
+    if (check_c_f(line) == -1)
+    {
+        printf("ERROR = CEILING HAS A PROBLEM! CHANGE IT (please).");
+        exit(0);
+    }
     y = 0;
     while (ft_isdigit(line[y]) == 0)
         y++;

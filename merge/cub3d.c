@@ -41,7 +41,24 @@ void	rc_loop(t_info *info)
 		info->sprites.sprites_buff[info->rc.x] = info->rc.perpWallDist;
 		
 	}
-	sprites_draw(info, 3, 3, 4);
+	int x;
+	int y;
+	x = 0;
+	while (x < info->size_list)
+	{
+		y = 0;
+		while (y < ft_strlen(info->map[x]))
+		{
+			if (info->map[x][y] == '2')
+			{
+				sprites_draw(info, x, y, 4);
+			}
+			y++;
+		}
+		x++;
+	}
+	//sprites_draw(info, 3, 3, 4);
+	
 }
 
 int	first_loop(t_info *info)
@@ -55,6 +72,7 @@ int	first_loop(t_info *info)
 
 void	read_file(t_info *info)
 {
+	
 	int fd;
 	int ret;
     char *line;
@@ -65,7 +83,12 @@ void	read_file(t_info *info)
 	ret = 0;
 	line = NULL;
 	
-	fd = open("cub3D.cub", O_RDONLY);
+	fd = open(info->file_path, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("ERROR = NOT ABLE TO READ THE FILE");
+		exit(0);
+	}
 	while ((ret = get_next_line(fd, &line)) > 0)
     {
         if (line[0] == 'R')
@@ -88,80 +111,68 @@ void	read_file(t_info *info)
             ft_lstadd_back(&lista, ft_lstnew((void *)line));
 	}
 	close(fd);
-
+	if (info->width == 1920)
+		info->width = 1921;
 	int x;
-    int size;
 
     x = 0;
+	
     info->size_list = ft_lstsize(lista);
-    info->save = ft_calloc(size, sizeof(char **));
-    while (lista != NULL)
+    info->map = ft_calloc(info->size_list, sizeof(char *));
+    while (lista)
     {
-        info->save[x] = ft_strdup(lista->content);
+        info->map[x] = ft_strdup(lista->content);
         lista = lista->next;
         x++;
     }
-	info->save[x] = NULL;
+	//info->map[x] = NULL;
+	check_errors_map(info->map, info->size_list);
+
 	x = 0;
-	while (info->save[x])
+	while (x < info->size_list)
 	{
 		y = 0;
-		while (y < ft_strlen(info->save[x]))
+		while (y < ft_strlen(info->map[x]))
 		{
-			if (ft_isalpha(info->save[x][y]) == 1)
+			if (ft_isalpha(info->map[x][y]) == 1)
 			{
 				info->posX = x + 0.5;
 				info->posY = y + 0.5;
-				info->save[x][y] = '0';
+				info->direction = info->map[x][y];
+				info->map[x][y] = '0';
+				
 			}
 			y++;
 		}
 		x++;
 	}
-	
-	// x = 0;
-	// y = 0;
-	// while (info->save[x])
-	// {
-	// 	printf("%s\n", info->save[x]);
-	// 	x++;
-	// }
-
-
-    //check_errors_map(save, size);
-
-	
 }
 
-int main()
+int main(int argc, char **argv)
 {
 	
 	t_info info;
 	info.mlx = mlx_init();
 	
-	//info.map = NULL;
+	if (argc == 1)
+	{
+		printf("ERROR = YOU FORGOT TO PUT THE FILE (.cub)");
+		exit(0);
+	}
+	else if (argc == 2)
+		info.file_path = ft_strdup(argv[1]);
+	info.moveSpeed = 0.03;
+	info.rotSpeed = 0.03;
 	read_file(&info);
-	//initialize the variables
     ft_init_info(&info);
 	init_play_pos(&info);
 	init_key(&info);
-	init_map(&info);
-
 	info.rgb_floor = create_rgb(info.flagF[0], info.flagF[1], info.flagF[2]);
 	info.rgb_ceiling = create_rgb(info.flagC[0], info.flagC[1], info.flagC[2]);
-	//printf("%d", info.rgb_ceiling);
-
 	ft_handle_text(&info);
-    
-	// Create the window
 	info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
-	
-    
-	// Creating the image
 	info.img.img = mlx_new_image(info.mlx, info.width, info.height);
 	info.img.data = (int *)mlx_get_data_addr(info.img.img, &info.img.bpp, &info.img.size, &info.img.endian);
-    
-	// LOOPS OF MLX
 	mlx_loop_hook(info.mlx, &first_loop, &info);
 	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
 	mlx_hook(info.win, 3, 0, &key_release, &info);

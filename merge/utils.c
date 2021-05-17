@@ -42,3 +42,8 @@ void	ft_bzero(void *str, size_t n)
 		i++;
 	}
 }
+
+int		create_rgb(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
+}

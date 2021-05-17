@@ -9,7 +9,7 @@ int     check_resolution(char *line)
     set_of_n = 0;
     while (line[i])
     {
-        if (ft_isdigit(line[i]) == 0 && line[i] != ' ' && line[i] != ',')
+        if (ft_isdigit(line[i]) == 0 && line[i] != ' ')
             return (-1);
         i++;
     }

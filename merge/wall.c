@@ -63,7 +63,7 @@ void    dda_algorithm(t_info *info)
 					info->rc.side = 3;
 			}
 			//Check if the ray hits wall
-			if (info->map[info->rc.mapX][info->rc.mapY] > 0)
+			if (info->map[info->rc.mapX][info->rc.mapY] == '1')
 				info->rc.hit = 1;
 		}
 }

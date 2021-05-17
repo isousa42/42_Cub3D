@@ -140,8 +140,7 @@ typedef struct s_info
 	t_keys keys;
 	t_rc rc;
 	t_sprites sprites;
-	int map[mapHeight][mapWidth];
-	//int **map;
+	char **map;
 	int	**buff;
 	int	**texture;
 	double posX;
@@ -160,6 +159,10 @@ typedef struct s_info
 	int size_list;
 	int size;
 	int start;
+
+	char direction;
+
+	char *file_path;
 	
 
 	int     flagF[3];
@@ -169,7 +172,10 @@ typedef struct s_info
     char    *flagWE;
     char    *flagEA;
     char    *flagS;
-	
+
+	int flagRX;
+	int flagRY;
+
 	char **save;
 	
 	int width;
@@ -184,7 +190,7 @@ int		first_loop(t_info *info);
 // init_test.c
 int		ft_handle_text(t_info *info);
 void	load_text(t_info *info);
-void	load_img(t_info *info, int *texture, char *path, t_image *img);
+int	load_img(t_info *info, int *texture, char *path, t_image *img);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	init_map(t_info *info);
 
@@ -245,3 +251,12 @@ int	ft_lstsize(t_list *lst);
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+
+
+void    check_errors_map(char **save, int size);
+int     start_map(char **save);
+int     counter_map(char **save, int first, int size);
+int     check_outside(char **save, int size);
+int     check_inside(char **save, int size);
+int     check_letters(char **save, int size);
+int     check_close(char **save, int size);

@@ -25,9 +25,11 @@ void	sprites_draw(t_info *info, double spriteX, double spriteY, int texture)
 		info->sprites.spriteHeight = (int)fabs((info->height / info->sprites.depthY) / 1); //using "info->sprites.depthY" instead of the real distance prevents fisheye
 		//calculate lowest and highest pixel to fill in current stripe
 		info->sprites.drawStartY = -info->sprites.spriteHeight / 2 + info->height / 2 + info->sprites.move;
-		if(info->sprites.drawStartY < 0) info->sprites.drawStartY = 0;
+		if(info->sprites.drawStartY <= 0) 
+			info->sprites.drawStartY = 0;
 		info->sprites.drawEndY = info->sprites.spriteHeight / 2 + info->height / 2 + info->sprites.move;
-		if(info->sprites.drawEndY >= info->height) info->sprites.drawEndY = info->height - 1;
+		if(info->sprites.drawEndY >= info->height) 
+			info->sprites.drawEndY = info->height - 1;
 
 		//calculate width of the sprite
 		info->sprites.spriteWidth = (int)fabs((info->height / info->sprites.depthY) / 1);

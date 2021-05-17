@@ -43,17 +43,17 @@ int	key_hook(t_info *info)
 {
 	if (info->keys.key_w)
 	{
-		if (!info->map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)])
+		if (info->map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)] == '0')
 			info->posX += info->dirX * info->moveSpeed;
-		if (!info->map[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)])
+		if (info->map[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)] == '0')
 			info->posY += info->dirY * info->moveSpeed;
 	}
 	//move backwards if no wall behind you
 	if (info->keys.key_s)
 	{
-		if (!info->map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)])
+		if (info->map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)] == '0')
 			info->posX -= info->dirX * info->moveSpeed;
-		if (!info->map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)])
+		if (info->map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)] == '0')
 			info->posY -= info->dirY * info->moveSpeed;
 	}
 	//rotate to the right

@@ -1,11 +1,13 @@
 #include "cub3d.h"
 
-void	load_img(t_info *info, int *texture, char *path, t_image *img)
+int	load_img(t_info *info, int *texture, char *path, t_image *img)
 {
 	int x;
 	int y;
 
 	img->img = mlx_xpm_file_to_image(info->mlx, path, &img->img_width, &img->img_height);
+	if (!img->img)
+		return(-1);
 	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size, &img->endian);
 	y = 0;
 	while (y < img->img_height)
@@ -18,21 +20,57 @@ void	load_img(t_info *info, int *texture, char *path, t_image *img)
 		}
 		y++;
 	}
-	mlx_destroy_image(info->mlx, img->img);	
+	mlx_destroy_image(info->mlx, img->img);
+	return 0;
 }
 
 void	load_text(t_info *info)
 {
 	t_image	img;
 
-	load_img(info, info->texture[0], "textures/eagle.xpm", &img);
-	load_img(info, info->texture[1], "textures/redbrick.xpm", &img);
-	load_img(info, info->texture[2], "textures/purplestone.xpm", &img);
-	load_img(info, info->texture[3], "textures/greystone.xpm", &img);
-	load_img(info, info->texture[4], "textures/bluestone.xpm", &img);
-	load_img(info, info->texture[5], "textures/mossy.xpm", &img);
-	load_img(info, info->texture[6], "textures/wood.xpm", &img);
-	load_img(info, info->texture[7], "textures/colorstone.xpm", &img);
+	if (load_img(info, info->texture[0], info->flagNO, &img) == -1)
+	{
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (NO) ! CHANGE THE PATH (please)");
+		free(info->texture);
+		free(info->buff);
+		free(info->sprites.sprites_buff);
+		exit(0);
+	}
+	if (load_img(info, info->texture[1], info->flagSO, &img) == -1)
+	{
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (SO) ! CHANGE THE PATH (please)");
+		free(info->texture);
+		free(info->buff);
+		free(info->sprites.sprites_buff);
+		exit(0);
+	}
+	if (load_img(info, info->texture[2], info->flagWE, &img) == -1)
+	{
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (WE) ! CHANGE THE PATH (please)");
+		free(info->texture);
+		free(info->buff);
+		free(info->sprites.sprites_buff);
+		exit(0);
+	}
+	if (load_img(info, info->texture[3], info->flagEA, &img) == -1)
+	{
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (EA) ! CHANGE THE PATH (please)");
+		free(info->texture);
+		free(info->buff);
+		free(info->sprites.sprites_buff);
+		exit(0);
+	}
+	if (load_img(info, info->texture[4], info->flagS, &img) == -1)
+	{
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (S) ! CHANGE THE PATH (please)");
+		free(info->texture);
+		free(info->buff);
+		free(info->sprites.sprites_buff);
+		exit(0);
+	}
+	// load_img(info, info->texture[5], "textures/mossy.xpm", &img);
+	// load_img(info, info->texture[6], "textures/wood.xpm", &img);
+	// load_img(info, info->texture[7], "textures/colorstone.xpm", &img);
 }
 
 int	ft_handle_text(t_info *info)
@@ -71,9 +109,9 @@ int	ft_handle_text(t_info *info)
 	//with single integer valus for colors (instead of 3 separate bytes for RGB), the textures are stored 
 	//in this format as well. 
 	i = 0;
-	if (!(info->texture = (int **)malloc(sizeof(int **) * 8)))
+	if (!(info->texture = (int **)malloc(sizeof(int **) * 5)))
 		return (1);
-	while (i < 8)
+	while (i < 5)
 	{
 		if (!(info->texture[i] = (int *)malloc(sizeof(int *) * (textHeight * textWidth))))
 			return (1);
@@ -81,7 +119,7 @@ int	ft_handle_text(t_info *info)
 	}
 	i = 0;
 	j = 0;
-	while (i < 8)
+	while (i < 5)
 	{
 		j = 0;
 		while (j < textHeight * textWidth)
@@ -111,19 +149,19 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-void init_map(t_info *info)
-{
-	int world_map[mapWidth][mapHeight]=
-	{
-		{5,5,5,2,2,5,5,5},
-		{5,0,0,0,0,0,0,5},
-		{5,0,0,0,0,0,0,5},
-		{5,0,0,0,0,0,0,5},
-		{5,0,0,0,0,0,0,5},
-		{5,0,0,0,0,0,0,5},
-		{5,0,0,0,0,0,0,5},
-		{5,5,5,5,5,5,5,5},
+// void init_map(t_info *info)
+// {
+// 	int world_map[mapWidth][mapHeight]=
+// 	{
+// 		{5,5,5,2,2,5,5,5},
+// 		{5,0,0,0,0,0,0,5},
+// 		{5,0,0,0,0,0,0,5},
+// 		{5,0,0,0,0,0,0,5},
+// 		{5,0,0,0,0,0,0,5},
+// 		{5,0,0,0,0,0,0,5},
+// 		{5,0,0,0,0,0,0,5},
+// 		{5,5,5,5,5,5,5,5},
 		
-	};
-	ft_memcpy(info->map, world_map, sizeof(int) * (mapHeight * mapWidth));
-}
+// 	};
+// 	ft_memcpy(info->map, world_map, sizeof(int) * (mapHeight * mapWidth));
+// }

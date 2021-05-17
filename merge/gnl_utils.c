@@ -113,7 +113,7 @@ int	ft_isalpha(int c)
 
 int	ft_iswall(char c)
 {
-	if ((c == ' ') || (c == '1'))
+	if (c == '1')
 		return (1);
 	else
 		return (0);
