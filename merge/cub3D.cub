@@ -1,9 +1,9 @@
-R 1200 1000
-NO textures/bluestone.xpm
-SO textures/mossy.xpm
-WE textures/wood.xpm
-EA textures/colorstone.xpm
-S textures/krika.xpm
+R 1920 1024
+NO textures/rsz_moldura.xpm
+SO textures/use_paws.xpm
+WE textures/rsz_bonesblack.xpm
+EA textures/rsz_boneswhite.xpm
+S textures/kika_sprite.xpm
 F 10,0,50
 C 120,130,40
 
@@ -13,10 +13,10 @@ C 120,130,40
 1111111111111
 100000000001
 100000W01001
-100000200001
-120000010011
-1000000010001
-100002000001
+100200000001
+1000000100011
+1000200010001
+1000000000001
 1111111111111
 
 

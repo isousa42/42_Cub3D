@@ -8,8 +8,8 @@
 
 #define mapWidth 8
 #define mapHeight 8
-#define textWidth 64
-#define textHeight 64
+#define textWidth 128
+#define textHeight 128
 
 #define X_EVENT_KEY_PRESS	2
 #define X_EVENT_KEY_EXIT	17
