@@ -22,7 +22,7 @@ void	rc_loop(t_info *info)
 			//Cast the texture coordinate to integer and mask with (textHeight - 1) in case of overflow
 			info->rc.textY = (int)info->rc.textPos & (textHeight - 1);
 			info->rc.textPos += info->rc.step;
-			info->rc.color = info->texture[info->rc.textNum][textHeight * info->rc.textY + info->rc.textX];
+			//info->rc.color = info->texture[info->rc.textNum][textHeight * info->rc.textY + info->rc.textX];
 
 			//make color darker for y-sides: R,G,B byte each divided through two with a shift and an and
 			if (info->rc.side == 0)
@@ -61,9 +61,15 @@ void	rc_loop(t_info *info)
 	
 }
 
+
+
 int	first_loop(t_info *info)
 {
 	rc_loop(info);
+	if (info->take_pic == 1)
+	{
+		take_screenshot(info);
+	}
 	draw_img(info);
 	key_hook(info);
 
@@ -113,6 +119,14 @@ void	read_file(t_info *info)
 	close(fd);
 	if (info->width == 1920)
 		info->width = 1921;
+	if (info->width >= 2560)
+		info->width = 2559;
+	if (info->height >= 1440)
+		info->height = 1439;
+	if (info->width <= 9)
+		info->width = 10;
+	if (info->height <= 9)
+		info->height = 10;
 	int x;
 
     x = 0;
@@ -148,21 +162,50 @@ void	read_file(t_info *info)
 	}
 }
 
+int		check_arg(char *arg)
+{
+	if (arg[0] != '-')
+		return (-1);
+	if (arg[1] != '-')
+		return (-1);
+	if (arg[2] != 's')
+		return (-1);
+	if (arg[3] != 'a')
+		return (-1);
+	if (arg[4] != 'v')
+		return (-1);
+	if (arg[5] != 'e')
+		return (-1);
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
 	
 	t_info info;
 	info.mlx = mlx_init();
-	
+	printf("CHEGOU");
 	if (argc == 1)
 	{
 		printf("ERROR = YOU FORGOT TO PUT THE FILE (.cub)");
 		exit(0);
 	}
-	else if (argc == 2)
+	else if (argc == 2 || argc == 3)
 		info.file_path = ft_strdup(argv[1]);
+	if (argc == 3)
+	{
+		if ((check_arg(argv[2])) == 0)
+			info.take_pic = 1;
+		else
+		{
+			printf("ERROR = IF YOU WANT A SCREENSHOT SPELL IT RIGTH!");
+			exit(0);
+		}
+	}
+		
 	info.moveSpeed = 0.03;
 	info.rotSpeed = 0.03;
+	
 	read_file(&info);
     ft_init_info(&info);
 	init_play_pos(&info);

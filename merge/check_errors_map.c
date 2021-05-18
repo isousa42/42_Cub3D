@@ -15,12 +15,12 @@ void    check_errors_map(char **save, int size)
 
     if(check_outside(save, size) == -1)
     {
-        printf("ERROR = MAP IS NOT CLOSE! CHANGE IT SO PLAYER CAN NOT ESCAPE!");
+        printf("ERROR = THERE IS A ERROR OUTSIDE! CHANGE IT SO PLAYER CAN NOT ESCAPE!");
         exit(0);
     }
     if(check_inside(save, size) == -1)
     {
-        printf("ERROR = SOMETHING WRONG INSIDE THE MAP. CORRECT IT (please.)");
+        printf("\033[1;32mERROR = SOMETHING WRONG INSIDE THE MAP. CORRECT IT (please.)");
         exit(0);
     }
     if (check_letters(save, size) != 1)
@@ -74,12 +74,7 @@ int     check_outside(char **save, int size)
     x = 0;
     z = 0;
     first = start_map(save);
-    //printf("%d", first);
-    // while(save[x])
-    // {
-    //     printf("1 = %s\n", save[x]);
-    //     x++;
-    // }
+    
     x = 0;
     empty = counter_map(save, first, size) + 1;
     while (x < size)
@@ -90,28 +85,41 @@ int     check_outside(char **save, int size)
             if (x == first || y == 0)
             {
                 if (ft_iswall(save[x][y]) == 0)
+                {
+                    //printf("1 - %d %d = %s\n", x, y, save[x]);
                     return (-1);
+                }
                 if (save[x][y] == ' ')
                 {
                     z = 0;
                     while (save[x][z] == ' ')
                         z++;
                     if (save[x][z] != '1')
-                        return (-1);
+                    {
+                    //printf("2 - %d %d = %s\n", x, y, save[x]);
+                    return (-1);
+                    }
                 }
             }
             if (x == size - empty || (y + 1 == ft_strlen(save[x])))
             {
                 if ((ft_iswall(save[x][y]) == 0))
-                    return (-1);
-                if (save[x][y] == ' ')
                 {
-                    z = ft_strlen(save[x]);
-                    while (save[x][z] == ' ')
-                        z--;
-                    if (save[x][z] != '1')
-                        return (-1);
+                    printf("3 - %d %d = %s\n", x, y, save[x]);
+                    return (-1);
                 }
+                // if (save[x][y] == ' ')
+                // {
+                //     // z = ft_strlen(save[x]);
+                //     // //printf("%d %s\n", z);
+                //     // // while (save[x][z] == ' ')
+                //     // //     z--;
+                //     // if (save[x][z] != '1' && save[x][z] != ' ')
+                //     // {
+                //     //     printf("4 - %d %d = %s\n", x, y, save[x]);
+                //     //     return (-1);
+                //     // }
+                // }
             }
             y++;
         }
@@ -185,9 +193,25 @@ int     check_close(char **save, int size)
         {
             while(save[x][y] == ' ')
                 y++;
+            if (save[x][y] == ' ' && save[x + 1][y] !=  '1')
+                return(-1);
+            if (save[x][y] == ' ' && save[x - 1][y] != '1')
+                return (-1);
+            if (save[x][y] == ' ' && save[x][y + 1] !=  '1')
+                return(-1);
+            if (save[x][y] == ' ' && save[x][y - 1] != '1')
+                return (-1);
+            if ((save[x][y] == '0' || save[x][y] == '2') && save[x + 1][y] == ' ')
+                return -1;
+            if ((save[x][y] == '0' || save[x][y] == '2') && save[x - 1][y] == ' ')
+                return -1;
+            if ((save[x][y] == '0' || save[x][y] == '2') && !save[x + 1][y])
+                return -1;
+            if ((save[x][y] == '0' || save[x][y] == '2') && !save[x - 1][y])
+                return -1;
             if ((save[x][y] == '0' || save[x][y] == '2') && (save[x + 1][y] != '1' && save[x + 1][y] != '0' && save[x + 1][y] != '2' && save[x + 1][y] != 'W' && save[x + 1][y] != 'N' && save[x + 1][y] != 'S' && save[x + 1][y] != 'E' && !save[x + 1]))
                 return (-1);
-            if ((save[x][y] == '0' || save[x][y] == '2') && (save[x - 1][y] != '1' && save[x - 1][y] != '0' && save[x - 1][y] != '2' && save[x - 1][y] != 'W' && save[x - 1][y] != 'N' && save[x - 1][y] != 'S' && save[x - 1][y] != 'E' && !save[x + 1]))
+            if ((save[x][y] == '0' || save[x][y] == '2') && (save[x - 1][y] != '1' && save[x - 1][y] != '0' && save[x - 1][y] != '2' && save[x - 1][y] != 'W' && save[x - 1][y] != 'N' && save[x - 1][y] != 'S' && save[x - 1][y] != 'E' && !save[x - 1]))
                 return (-1);
             y++;
         }

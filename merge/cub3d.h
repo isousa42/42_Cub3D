@@ -173,6 +173,8 @@ typedef struct s_info
     char    *flagEA;
     char    *flagS;
 
+	int take_pic;
+
 	int flagRX;
 	int flagRY;
 
@@ -260,3 +262,11 @@ int     check_outside(char **save, int size);
 int     check_inside(char **save, int size);
 int     check_letters(char **save, int size);
 int     check_close(char **save, int size);
+
+
+int		check_arg(char *arg);
+
+void    take_screenshot(t_info *info);
+void	write_image(int file, t_info *info);
+int	write_header(int fd, int filesize, t_info *info);
+void	conv_int(unsigned char *start, int value);
