@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-#define mapWidth 8
-#define mapHeight 8
+// #define mapWidth 8
+// #define mapHeight 8
 #define textWidth 128
 #define textHeight 128
 
@@ -19,6 +19,8 @@
 #define KEY_A 0
 #define KEY_D 2
 #define KEY_ESC 53
+#define KEY_RIGHT 124
+#define KEY_LEFT 123
 
 typedef struct s_list
 {
@@ -97,6 +99,8 @@ typedef struct s_keys
 	int key_a;
 	int key_d;
 	int key_esc;
+	int key_right;
+	int key_left;
 }		t_keys;
 
 typedef struct s_image
@@ -194,7 +198,6 @@ int		ft_handle_text(t_info *info);
 void	load_text(t_info *info);
 int	load_img(t_info *info, int *texture, char *path, t_image *img);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	init_map(t_info *info);
 
 // init_info.c
 void    ft_init_info(t_info *info);
@@ -270,3 +273,11 @@ void    take_screenshot(t_info *info);
 void	write_image(int file, t_info *info);
 int	write_header(int fd, int filesize, t_info *info);
 void	conv_int(unsigned char *start, int value);
+int	close_window(t_info *info);
+void    check_args(int argc, char **argv, t_info *info);
+void    init_pos(t_info *info);
+void    init_map(t_info *info, t_list *lista);
+void    check_width(t_info *info);
+void    parse_file(t_info *info, t_list **lista, char *line);
+void	init_south_north(t_info *info);
+void	init_west_east(t_info *info);

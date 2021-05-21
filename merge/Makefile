@@ -10,7 +10,8 @@ MLX = /usr/local/lib
 LFLAGS = -lmlx -framework OPENGL -framework AppKit -g
 SRCS	= cub3d.c init_text.c init_info.c keys.c floor.c wall.c utils.c \
 			 sprites.c gnl_utils.c get_next_line.c check_errors_var.c \
-			 parse_utils.c lst_utils.c check_errors_map.c screenshot.c
+			 parse_utils.c lst_utils.c check_errors_map.c screenshot.c \
+			 check_args.c read_file.c
 
 OBJS	= $(SRCS:.c=.o)
 

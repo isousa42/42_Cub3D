@@ -7,6 +7,8 @@ void	init_key(t_info *info)
 	info->keys.key_a = 0;
 	info->keys.key_d = 0;
 	info->keys.key_esc = 0;
+	info->keys.key_right = 0;
+	info->keys.key_left = 0;
 }
 
 int	key_release(int keycode, t_info *info)
@@ -21,6 +23,10 @@ int	key_release(int keycode, t_info *info)
 		info->keys.key_d = 0;
 	if (keycode == KEY_ESC)
 		info->keys.key_esc = 0;
+	if (keycode == KEY_RIGHT)
+		info->keys.key_right = 0;
+	if (keycode == KEY_LEFT)
+		info->keys.key_left = 0;
 	return (0);
 }
 
@@ -36,6 +42,10 @@ int	key_press(int keycode, t_info *info)
 		info->keys.key_d = 1;
 	if (keycode == KEY_ESC)
 		info->keys.key_esc = 1;
+	if (keycode == KEY_RIGHT)
+		info->keys.key_right = 1;
+	if (keycode == KEY_LEFT)
+		info->keys.key_left = 1;
 	return (0);
 }
 
@@ -57,7 +67,7 @@ int	key_hook(t_info *info)
 			info->posY -= info->dirY * info->moveSpeed;
 	}
 	//rotate to the right
-	if (info->keys.key_d)
+	if (info->keys.key_d || info->keys.key_right)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dirX;
@@ -68,7 +78,7 @@ int	key_hook(t_info *info)
 		info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
 	}
 	//rotate to the left
-	if (info->keys.key_a)
+	if (info->keys.key_a || info->keys.key_left)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dirX;

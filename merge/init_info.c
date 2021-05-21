@@ -3,47 +3,51 @@
 void    ft_init_info(t_info *info)
 {
 	info->sprites.sprites_buff = ft_calloc(info->width, sizeof(double *));
+	info->moveSpeed = 0.03;
+	info->rotSpeed = 0.03;
+	info->rgb_floor = create_rgb(info->flagF[0], info->flagF[1], info->flagF[2]);
+	info->rgb_ceiling = create_rgb(info->flagC[0], info->flagC[1], info->flagC[2]);
 }
 
 void	init_play_pos(t_info *info)
 {
+	if (info->direction == 'N' || info->direction == 'S')
+		init_south_north(info);
+	else if (info->direction == 'W' || info->direction == 'E')
+		init_west_east(info);
+}
+
+void	init_south_north(t_info *info)
+{
 	if (info->direction == 'N')
 	{
-		//Initial Direction the player is looking
 		info->dirX = -1;
 		info->dirY = 0.0;
-
-		//Initial FOV
 		info->planeX = 0.0;
 		info->planeY = 0.66;
 	}
 	else if (info->direction == 'S')
 	{
-		//Initial Direction the player is looking
 		info->dirX = 1;
 		info->dirY = 0.0;
-
-		//Initial FOV
 		info->planeX = 0.0;
 		info->planeY = -0.66;
 	}
-	else if (info->direction == 'W')
+}
+
+void	init_west_east(t_info *info)
+{
+	if (info->direction == 'W')
 	{
-		//Initial Direction the player is looking
 		info->dirX = 0.0;
 		info->dirY = -1;
-
-		//Initial FOV
 		info->planeX = -0.66;
 		info->planeY = 0.0;
 	}
 	else if (info->direction == 'E')
 	{
-		//Initial Direction the player is looking
 		info->dirX = 0.0;
 		info->dirY = 1;
-
-		//Initial FOV
 		info->planeX = 0.66;
 		info->planeY = 0.0;
 	}

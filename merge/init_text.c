@@ -148,20 +148,3 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-
-// void init_map(t_info *info)
-// {
-// 	int world_map[mapWidth][mapHeight]=
-// 	{
-// 		{5,5,5,2,2,5,5,5},
-// 		{5,0,0,0,0,0,0,5},
-// 		{5,0,0,0,0,0,0,5},
-// 		{5,0,0,0,0,0,0,5},
-// 		{5,0,0,0,0,0,0,5},
-// 		{5,0,0,0,0,0,0,5},
-// 		{5,0,0,0,0,0,0,5},
-// 		{5,5,5,5,5,5,5,5},
-		
-// 	};
-// 	ft_memcpy(info->map, world_map, sizeof(int) * (mapHeight * mapWidth));
-// }
