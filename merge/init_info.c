@@ -10,14 +10,13 @@ void	init_rgb(t_info *info)
 	info->b2 = 0;
 }
 
-void    ft_init_info(t_info *info)
+void	ft_init_info(t_info *info)
 {
-	
 	info->sprites.sprites_buff = ft_calloc(info->width, sizeof(double *));
 	info->moveSpeed = 0.03;
 	info->rotSpeed = 0.03;
-	info->rgb_floor = create_rgb(info->flagF[0], info->flagF[1], info->flagF[2]);
-	info->rgb_ceiling = create_rgb(info->flagC[0], info->flagC[1], info->flagC[2]);
+	info->rgb_f = create_rgb(info->flagF[0], info->flagF[1], info->flagF[2]);
+	info->rgb_c = create_rgb(info->flagC[0], info->flagC[1], info->flagC[2]);
 }
 
 void	init_play_pos(t_info *info)

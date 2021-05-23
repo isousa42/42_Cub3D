@@ -4,13 +4,24 @@ void	sprites_init(t_info *info, double spriteX, double spriteY, int texture)
 {
 	spriteX = (spriteX + 0.5) - info->posX;
 	spriteY = (spriteY + 0.5) - info->posY;
-	info->sprites.inversion = 1.0 / (info->planeX * info->dirY - info->dirX * info->planeY); 
-	info->sprites.depthX = info->sprites.inversion * (info->dirY * spriteX - info->dirX * spriteY);
-	info->sprites.depthY = info->sprites.inversion * (-info->planeY * spriteX + info->planeX * spriteY); 
-	info->sprites.screenX = (int)((info->width / 2) * (1 + info->sprites.depthX / info->sprites.depthY));
+	info->norm = info->planeX * info->dirY - info->dirX * info->planeY;
+	info->sprites.inversion = 1.0 / (info->norm);
+	info->norm = info->dirY * spriteX - info->dirX * spriteY;
+	info->sprites.depthX = info->sprites.inversion * (info->norm);
+	info->norm = -info->planeY * spriteX + info->planeX * spriteY;
+	info->sprites.depthY = info->sprites.inversion * (info->norm); 
+	info->norm = 1 + info->sprites.depthX / info->sprites.depthY;
+	info->sprites.screenX = (int)((info->width / 2) * (info->norm));
 	info->sprites.move = (int)(0.0 / info->sprites.depthY);
-	info->sprites.spriteHeight = (int)fabs((info->height / info->sprites.depthY) / 1);
-	info->sprites.drawStartY = -info->sprites.spriteHeight / 2 + info->height / 2 + info->sprites.move;
+	info->norm = info->height / info->sprites.depthY;
+	info->sprites.spriteHeight = (int)fabs((info->norm) / 1);
+	info->norm = info->height / 2 + info->sprites.move;
+	info->sprites.drawStartY = -info->sprites.spriteHeight / 2 + info->norm;
+	sprites_cond(info, spriteX, spriteY, texture);
+}
+
+void	sprites_cond(t_info *info, double spriteX, double spriteY, int texture)
+{
 	if(info->sprites.drawStartY <= 0) 
 		info->sprites.drawStartY = 0;
 	info->sprites.drawEndY = info->sprites.spriteHeight / 2 + info->height / 2 + info->sprites.move;
@@ -28,13 +39,15 @@ void	sprites_init(t_info *info, double spriteX, double spriteY, int texture)
 
 void	sprites_draw(t_info *info, double spriteX, double spriteY, int texture)
 {
-	int y;
+	int	y;
 
 	sprites_init(info, spriteX, spriteY, texture);
 	while (info->sprites.sprite < info->sprites.drawEndX)
 	{
 		info->sprites.textX = (int)((256 * (info->sprites.sprite - (-info->sprites.spriteWidth / 2 + info->sprites.screenX)) * textWidth / info->sprites.spriteWidth) / 256);
-		if(info->sprites.depthY > 0 && info->sprites.sprite > 0 && info->sprites.sprite < info->width && info->sprites.depthY < info->sprites.sprites_buff[info->sprites.sprite])
+		if(info->sprites.depthY > 0 && info->sprites.sprite > 0
+			&& info->sprites.sprite < info->width
+		&& info->sprites.depthY < info->sprites.sprites_buff[info->sprites.sprite])
 		{
 			y = info->sprites.drawStartY;
 			while (y < info->sprites.drawEndY)

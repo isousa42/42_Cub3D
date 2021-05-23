@@ -37,19 +37,21 @@ static int	ft_returns(int fd, char **line, char **store, int readcount)
 	return (ft_strsave(fd, line, store));
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	int			buffer_size;
 	static char	*store[100000];
-	char		buff[buffer_size + 1];
+	char		buff[32];
 	char		*temp;
 	int			readcount;
 
 	buffer_size = 31;
+	readcount = 1;
 	if (fd < 0 || !line || buffer_size <= 0)
 		return (-1);
-	while ((readcount = read(fd, buff, buffer_size)) > 0)
+	while (readcount > 0)
 	{
+		readcount = read(fd, buff, buffer_size);
 		buff[readcount] = '\0';
 		if (!store[fd])
 			store[fd] = ft_strdup("");

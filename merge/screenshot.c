@@ -49,16 +49,16 @@ void	write_image(int file, t_info *info)
 	}
 }
 
-void    take_screenshot(t_info *info)
+void	take_screenshot(t_info *info)
 {
-    int fd;
-    int fz;
-    int i;
+	int	fd;
+	int	fz;
+	int	i;
 
-    fz = 54 + (3 * (info->height * info->width));
-    fd = open("screenshot.bmp", O_WRONLY | O_CREAT, 0777 | O_TRUNC | O_APPEND);
-    write_header(fd, fz, info);
-    write_image(fd, info);
-    close(fd);
-    info->take_pic = 2;
+	fz = 54 + (3 * (info->height * info->width));
+	fd = open("screenshot.bmp", O_WRONLY | O_CREAT, 0777 | O_TRUNC | O_APPEND);
+	write_header(fd, fz, info);
+	write_image(fd, info);
+	close(fd);
+	info->take_pic = 2;
 }

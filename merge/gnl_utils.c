@@ -1,8 +1,8 @@
 #include "cub3d.h"
 
-int		ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -44,7 +44,8 @@ char	*ft_strdup(char *src)
 	char	*dest;
 	int		i;
 
-	if ((dest = malloc(ft_strlen(src) * sizeof(char) + 1)) == NULL)
+	dest = malloc(ft_strlen(src) * sizeof(char) + 1);
+	if (!dest)
 		return (0);
 	i = 0;
 	while (src[i] != '\0')
@@ -56,7 +57,7 @@ char	*ft_strdup(char *src)
 	return (dest);
 }
 
-int		ft_strchr(char *s, char c)
+int	ft_strchr(char *s, char c)
 {
 	while (c != *s)
 	{
@@ -93,28 +94,4 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	new[i] = '\0';
 	return (new);
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
-	else
-		return (0);
-}
-
-int	ft_isalpha(int c)
-{
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
-		return (1);
-	else
-		return (0);
-}
-
-int	ft_iswall(char c)
-{
-	if (c == '1' || c == ' ')
-		return (1);
-	else
-		return (0);
 }

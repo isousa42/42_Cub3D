@@ -2,6 +2,11 @@
 
 void	floor_init(t_info *info)
 {
+	int	norminette;
+	int	norminette2;
+
+	norminette = (info->rc.rayDirX1 - info->rc.rayDirX0) / info->width;
+	norminette2 = (info->rc.rayDirY1 - info->rc.rayDirY0) / info->width;
 	info->rc.rayDirX0 = info->dirX - info->planeX;
 	info->rc.rayDirY0 = info->dirY - info->planeY;
 	info->rc.rayDirX1 = info->dirX + info->planeX;
@@ -9,8 +14,8 @@ void	floor_init(t_info *info)
 	info->rc.p = info->rc.y - info->height / 2;
 	info->rc.posZ = 0.5 * info->height;
 	info->rc.rowDistance = info->rc.posZ / info->rc.p;
-	info->rc.floorStepX = info->rc.rowDistance * (info->rc.rayDirX1 - info->rc.rayDirX0) / info->width;
-	info->rc.floorStepY = info->rc.rowDistance * (info->rc.rayDirY1 - info->rc.rayDirY0) / info->width;
+	info->rc.floorStepX = info->rc.rowDistance * norminette;
+	info->rc.floorStepY = info->rc.rowDistance * norminette2;
 	info->rc.floorX = info->posX + info->rc.rowDistance * info->rc.rayDirX0;
 	info->rc.floorY = info->posY + info->rc.rowDistance * info->rc.rayDirY0;
 	info->rc.k = 0;
@@ -18,16 +23,22 @@ void	floor_init(t_info *info)
 
 void	floor_calculations(t_info *info)
 {
+	int	norminette;
+
 	info->rc.cellX = (int)(info->rc.floorX);
 	info->rc.cellY = (int)(info->rc.floorY);
-	info->rc.tx = (int)(textWidth * (info->rc.floorX - info->rc.cellX)) & (textWidth - 1);
-	info->rc.ty = (int)(textHeight * (info->rc.floorY - info->rc.cellY)) & (textHeight - 1);
+	norminette = info->rc.floorX - info->rc.cellX;
+	info->rc.tx = (int)(textWidth * (norminette)) & (textWidth - 1);
+	norminette = info->rc.floorY - info->rc.cellY;
+	info->rc.ty = (int)(textHeight * (norminette)) & (textHeight - 1);
 	info->rc.floorX += info->rc.floorStepX;
 	info->rc.floorY += info->rc.floorStepY;
 }
 
-void    floor_draw(t_info *info)
+void	floor_draw(t_info *info)
 {
+	int	norminette;
+
 	info->rc.y = 0;
 	while (info->rc.y < info->height)
 	{
@@ -35,8 +46,9 @@ void    floor_draw(t_info *info)
 		while (info->rc.k < info->width)
 		{
 			floor_calculations(info);
-			info->buff[info->rc.y][info->rc.k] = info->rgb_floor; 
-			info->buff[info->height - info->rc.y - 1][info->rc.k] = info->rgb_ceiling;
+			info->buff[info->rc.y][info->rc.k] = info->rgb_f;
+			norminette = info->height - info->rc.y - 1;
+			info->buff[norminette][info->rc.k] = info->rgb_c;
 			info->rc.k++;
 		}
 		info->rc.y++;

@@ -2,13 +2,15 @@
 
 int	load_img(t_info *info, int *texture, char *path, t_image *img)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
-	img->img = mlx_xpm_file_to_image(info->mlx, path, &img->img_width, &img->img_height);
+	img->img = mlx_xpm_file_to_image(info->mlx, path, &img->img_width,
+			&img->img_height);
 	if (!img->img)
-		return(-1);
-	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size, &img->endian);
+		return (-1);
+	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size,
+			&img->endian);
 	y = 0;
 	while (y < img->img_height)
 	{
@@ -21,21 +23,21 @@ int	load_img(t_info *info, int *texture, char *path, t_image *img)
 		y++;
 	}
 	mlx_destroy_image(info->mlx, img->img);
-	return 0;
+	return (0);
 }
 
 void	free_text(t_info *info, int control)
 {
 	if (control == 1)
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (NO) ! CHANGE THE PATH (please)");
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (NO)!");
 	else if (control == 2)
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (SO) ! CHANGE THE PATH (please)");
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (SO)!");
 	else if (control == 3)
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (WE) ! CHANGE THE PATH (please)");
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (WE)!");
 	else if (control == 4)
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (EA) ! CHANGE THE PATH (please)");
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (EA)!");
 	else if (control == 5)
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (S) ! CHANGE THE PATH (please)");
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (S)!");
 	free(info->texture);
 	free(info->buff);
 	free(info->sprites.sprites_buff);
@@ -58,9 +60,9 @@ void	load_text(t_info *info)
 		free_text(info, 5);
 }
 
-int		handle_buff(t_info *info)
+int	handle_buff(t_info *info)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	info->buff = ft_calloc(info->height, sizeof(int **));
@@ -72,19 +74,4 @@ int		handle_buff(t_info *info)
 		info->texture[i] = ft_calloc(textHeight * textWidth, sizeof(int *));
 	load_text(info);
 	return (0);
-}
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	size_t i;
-
-	i = 0;
-	if (!dest && !src)
-		return (0);
-	while (i < n)
-	{
-		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
-		i++;
-	}
-	return (dest);
 }

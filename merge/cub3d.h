@@ -6,8 +6,6 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-// #define mapWidth 8
-// #define mapHeight 8
 #define textWidth 128
 #define textHeight 128
 
@@ -156,9 +154,9 @@ typedef struct s_info
 	double moveSpeed;
 	double rotSpeed;
 	//ceiling rgb
-	int rgb_ceiling;
+	int rgb_c;
 	//floor rgb
-	int rgb_floor;
+	int rgb_f;
 
 	int size_list;
 	int size;
@@ -194,6 +192,8 @@ typedef struct s_info
 	
 	int width;
 	int height;
+	double norm;
+	double norm2;
 }		t_info;
 
 // cub3d.c
@@ -298,3 +298,8 @@ int		handle_buff(t_info *info);
 void	handle_keys(t_info *info, int keys);
 void	init_rgb(t_info *info);
 void	sprites_init(t_info *info, double spriteX, double spriteY, int texture);
+int	check_what_it_is(char **save, int x, int y, int control);
+int	help_checker(char **save, int x, int y, int first);
+
+void	sprites_cond(t_info *info, double spriteX, double spriteY, int texture);
+void	handle_keys_2(t_info *info, int keys);

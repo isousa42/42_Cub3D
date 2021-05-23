@@ -47,3 +47,10 @@ int		create_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }
+
+int	close_window(t_info *info)
+{
+	mlx_destroy_image(info->mlx, info->img.img);
+	mlx_destroy_window(info->mlx, info->win);
+	exit(0);
+}

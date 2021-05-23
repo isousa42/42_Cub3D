@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int		check_arg(char *arg)
+int	check_arg(char *arg)
 {
 	if (arg[0] != '-')
 		return (-1);
@@ -17,9 +17,9 @@ int		check_arg(char *arg)
 	return (0);
 }
 
-void    check_args(int argc, char **argv, t_info *info)
+void	check_args(int argc, char **argv, t_info *info)
 {
-    if (argc == 1)
+	if (argc == 1)
 	{
 		printf("ERROR = YOU FORGOT TO PUT THE FILE (.cub)");
 		exit(0);
@@ -37,4 +37,3 @@ void    check_args(int argc, char **argv, t_info *info)
 		}
 	}
 }
-
