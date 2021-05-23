@@ -3,6 +3,7 @@
         "memory": "c",
         "utility": "c",
         "ios": "c",
-        "complex": "c"
+        "complex": "c",
+        "algorithm": "c"
     }
 }

@@ -1,7 +1,18 @@
 #include "cub3d.h"
 
+void	init_rgb(t_info *info)
+{
+	info->r = 0;
+	info->g = 0;
+	info->b = 0;
+	info->r2 = 0;
+	info->g2 = 0;
+	info->b2 = 0;
+}
+
 void    ft_init_info(t_info *info)
 {
+	
 	info->sprites.sprites_buff = ft_calloc(info->width, sizeof(double *));
 	info->moveSpeed = 0.03;
 	info->rotSpeed = 0.03;

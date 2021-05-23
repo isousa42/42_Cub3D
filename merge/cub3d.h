@@ -177,6 +177,14 @@ typedef struct s_info
     char    *flagEA;
     char    *flagS;
 
+	int r;
+	int g;
+	int b;
+
+	int r2;
+	int g2;
+	int b2;
+
 	int take_pic;
 
 	int flagRX;
@@ -194,7 +202,6 @@ int		first_loop(t_info *info);
 
 
 // init_test.c
-int		ft_handle_text(t_info *info);
 void	load_text(t_info *info);
 int	load_img(t_info *info, int *texture, char *path, t_image *img);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
@@ -213,7 +220,7 @@ void	init_key(t_info *info);
 void    floor_draw(t_info *info);
 void	floor_init(t_info *info);
 void	floor_calculations(t_info *info);
-void	floor_setup(t_info *info);
+
 int		create_rgb(int r, int g, int b);
 
 // wall.c
@@ -281,3 +288,13 @@ void    check_width(t_info *info);
 void    parse_file(t_info *info, t_list **lista, char *line);
 void	init_south_north(t_info *info);
 void	init_west_east(t_info *info);
+void	text_calc(t_info *info);
+void	sprites_calc(t_info *info);
+int     check_other_things(char **save, int x, int y);
+void     help_check_res(char *line, int *i, int *set_of_n);
+void    help_check_cf(char *line, int *i, int *set_of_n);
+void	free_text(t_info *info, int control);
+int		handle_buff(t_info *info);
+void	handle_keys(t_info *info, int keys);
+void	init_rgb(t_info *info);
+void	sprites_init(t_info *info, double spriteX, double spriteY, int texture);

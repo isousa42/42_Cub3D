@@ -1,5 +1,20 @@
 #include "cub3d.h"
 
+void     help_check_res(char *line, int *i, int *set_of_n)
+{
+    if (line[*i] == ' ')
+    {
+        while (line[*i] == ' ')
+            (*i)++;
+    }
+    if (ft_isdigit(line[*i]) == 1)
+    {
+        (*set_of_n)++;
+        while (ft_isdigit(line[*i]) == 1)
+            (*i)++;
+    }
+}
+
 int     check_resolution(char *line)
 {
     int i;
@@ -15,22 +30,25 @@ int     check_resolution(char *line)
     }
     i = 1;
     while (line[i])
-    {
-        if (line[i] == ' ')
-        {
-            while (line[i] == ' ')
-                i++;
-        }
-        if (ft_isdigit(line[i]) == 1)
-        {
-            set_of_n++;
-            while (ft_isdigit(line[i]) == 1)
-                i++;
-        }
-    }
+        help_check_res(line, &i, &set_of_n);
     if (set_of_n != 2)
         return (-1);
     return 0;
+}
+
+void    help_check_cf(char *line, int *i, int *set_of_n)
+{
+    if (line[*i] == ' ' || line[*i] == ',')
+    {
+        while (line[*i] == ' ' || line[*i] == ',')
+            (*i)++;
+    }
+    if (ft_isdigit(line[*i]) == 1)
+    {
+        (*set_of_n)++;
+        while (ft_isdigit(line[*i]) == 1)
+            (*i)++;
+    }
 }
 
 int     check_c_f(char *line)
@@ -48,19 +66,7 @@ int     check_c_f(char *line)
     }
     i = 1;
     while (line[i])
-    {
-        if (line[i] == ' ' || line[i] == ',')
-        {
-            while (line[i] == ' ' || line[i] == ',')
-                i++;
-        }
-        if (ft_isdigit(line[i]) == 1)
-        {
-            set_of_n++;
-            while (ft_isdigit(line[i]) == 1)
-                i++;
-        }
-    }
+        help_check_cf(line, &i, &set_of_n);
     if (set_of_n != 3)
         return (-1);
     return 0;

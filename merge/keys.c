@@ -49,6 +49,30 @@ int	key_press(int keycode, t_info *info)
 	return (0);
 }
 
+void	handle_keys(t_info *info, int keys)
+{
+	double oldDirX;
+	double oldPlaneX;
+	if (keys == 1)
+	{
+		oldDirX = info->dirX;
+		info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
+		info->dirY = oldDirX * sin(-info->rotSpeed) + info->dirY * cos(-info->rotSpeed);
+		oldPlaneX = info->planeX;
+		info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
+		info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
+	}
+	if (keys == 2)
+	{
+		oldDirX = info->dirX;
+		info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
+		info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
+		oldPlaneX = info->planeX;
+		info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
+		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
+	}
+}
+
 int	key_hook(t_info *info)
 {
 	if (info->keys.key_w)
@@ -58,7 +82,6 @@ int	key_hook(t_info *info)
 		if (info->map[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)] == '0')
 			info->posY += info->dirY * info->moveSpeed;
 	}
-	//move backwards if no wall behind you
 	if (info->keys.key_s)
 	{
 		if (info->map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)] == '0')
@@ -66,28 +89,10 @@ int	key_hook(t_info *info)
 		if (info->map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)] == '0')
 			info->posY -= info->dirY * info->moveSpeed;
 	}
-	//rotate to the right
 	if (info->keys.key_d || info->keys.key_right)
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dirX;
-		info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
-		info->dirY = oldDirX * sin(-info->rotSpeed) + info->dirY * cos(-info->rotSpeed);
-		double oldPlaneX = info->planeX;
-		info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
-		info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
-	}
-	//rotate to the left
+		handle_keys(info, 1);
 	if (info->keys.key_a || info->keys.key_left)
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dirX;
-		info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
-		info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
-		double oldPlaneX = info->planeX;
-		info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
-		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
-	}
+		handle_keys(info, 2);
 	if (info->keys.key_esc)
 		exit(0);
 	return (0);

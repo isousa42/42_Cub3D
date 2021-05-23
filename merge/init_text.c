@@ -24,112 +24,52 @@ int	load_img(t_info *info, int *texture, char *path, t_image *img)
 	return 0;
 }
 
+void	free_text(t_info *info, int control)
+{
+	if (control == 1)
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (NO) ! CHANGE THE PATH (please)");
+	else if (control == 2)
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (SO) ! CHANGE THE PATH (please)");
+	else if (control == 3)
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (WE) ! CHANGE THE PATH (please)");
+	else if (control == 4)
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (EA) ! CHANGE THE PATH (please)");
+	else if (control == 5)
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (S) ! CHANGE THE PATH (please)");
+	free(info->texture);
+	free(info->buff);
+	free(info->sprites.sprites_buff);
+	exit(0);
+}
+
 void	load_text(t_info *info)
 {
 	t_image	img;
 
 	if (load_img(info, info->texture[0], info->flagNO, &img) == -1)
-	{
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (NO) ! CHANGE THE PATH (please)");
-		free(info->texture);
-		free(info->buff);
-		free(info->sprites.sprites_buff);
-		exit(0);
-	}
+		free_text(info, 1);
 	if (load_img(info, info->texture[1], info->flagSO, &img) == -1)
-	{
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (SO) ! CHANGE THE PATH (please)");
-		free(info->texture);
-		free(info->buff);
-		free(info->sprites.sprites_buff);
-		exit(0);
-	}
+		free_text(info, 2);
 	if (load_img(info, info->texture[2], info->flagWE, &img) == -1)
-	{
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (WE) ! CHANGE THE PATH (please)");
-		free(info->texture);
-		free(info->buff);
-		free(info->sprites.sprites_buff);
-		exit(0);
-	}
+		free_text(info, 3);
 	if (load_img(info, info->texture[3], info->flagEA, &img) == -1)
-	{
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (EA) ! CHANGE THE PATH (please)");
-		free(info->texture);
-		free(info->buff);
-		free(info->sprites.sprites_buff);
-		exit(0);
-	}
+		free_text(info, 4);
 	if (load_img(info, info->texture[4], info->flagS, &img) == -1)
-	{
-		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (S) ! CHANGE THE PATH (please)");
-		free(info->texture);
-		free(info->buff);
-		free(info->sprites.sprites_buff);
-		exit(0);
-	}
-	// load_img(info, info->texture[5], "textures/mossy.xpm", &img);
-	// load_img(info, info->texture[6], "textures/wood.xpm", &img);
-	// load_img(info, info->texture[7], "textures/colorstone.xpm", &img);
+		free_text(info, 5);
 }
 
-int	ft_handle_text(t_info *info)
+int		handle_buff(t_info *info)
 {
 	int i;
-	int j;
 
-	i = 0;
-	j = 0;
-	// Creating the buffer - With the textures, the vertical stripes can not be drawn with the vertical line command anymore, 
-	//instead every pixel has to be drawn separetely. So we need a 2D array, used as ascreen buffer, 
-	// and copy it to the screen at once, already with the texture. It goes a lot faster, than drawing pixel by pixel. 
-	if (!(info->buff = (int **)malloc(sizeof(int **) * info->height)))
-		return (1);
-	while (i < info->height)
-	{
-		//printf("ADDING A ROW %i\n", i);
-		if(!(info->buff[i] = (int *)malloc(sizeof(int *) * info->width)))
-			return (1);
-		i++;
-	}
-	
-	i = 0;
-	while (i < info->height)
-	{
-		j = 0;
-		while (j < info->width)
-		{
-			info->buff[i][j] = 0;
-			//printf("%d - %d\n", info->buff[i][j], i);
-			j++;
-		}
-		i++;
-	}
-	// Allocating memory for the textures and load the textures. Since the buffer fuction works 
-	//with single integer valus for colors (instead of 3 separate bytes for RGB), the textures are stored 
-	//in this format as well. 
-	i = 0;
-	if (!(info->texture = (int **)malloc(sizeof(int **) * 5)))
-		return (1);
-	while (i < 5)
-	{
-		if (!(info->texture[i] = (int *)malloc(sizeof(int *) * (textHeight * textWidth))))
-			return (1);
-		i++;
-	}
-	i = 0;
-	j = 0;
-	while (i < 5)
-	{
-		j = 0;
-		while (j < textHeight * textWidth)
-		{
-			info->texture[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-	// FUNCTION THAT READS THE TEXTURES IN THE FILES
+	i = -1;
+	info->buff = ft_calloc(info->height, sizeof(int **));
+	while (++i < info->height)
+		info->buff[i] = ft_calloc(info->width, sizeof(int *));
+	info->texture = ft_calloc(5, sizeof(int **));
+	i = -1;
+	while (++i < 5)
+		info->texture[i] = ft_calloc(textHeight * textWidth, sizeof(int *));
 	load_text(info);
 	return (0);
 }

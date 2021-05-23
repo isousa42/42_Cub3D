@@ -6,7 +6,6 @@ void    parse_r(t_info *info, char *line)
     info->width = 0;
 	info->height = 0;
 
-    
     y = 0;
     if (check_resolution(line) == -1)
     {
@@ -31,9 +30,6 @@ void    parse_r(t_info *info, char *line)
 
 void    parse_f(t_info *info, char *line)
 {
-    int r = 0;
-    int g = 0;
-    int b = 0;
     int y;
 
     if (check_c_f(line) == -1)
@@ -45,36 +41,24 @@ void    parse_f(t_info *info, char *line)
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
-    {
-        r = (r * 10) + (line[y] - '0');
-        y++;
-    }
+        info->r = (info->r * 10) + (line[y++] - '0');
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
-    {
-        g = (g * 10) + (line[y] - '0');
-        y++;
-    }
+        info->g = (info->g * 10) + (line[y++] - '0');
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
-    {
-        b = (b * 10) + (line[y] - '0');
-        y++;
-    }
-    if (r > 255 || b > 255 || g > 255)
+        info->b = (info->b * 10) + (line[y++] - '0');
+    if (info->r > 255 || info->b > 255 || info->g > 255)
         printf("ERROR");
-    info->flagF[0] = r;
-    info->flagF[1] = g;
-    info->flagF[2] = b;
+    info->flagF[0] = info->r;
+    info->flagF[1] = info->g;
+    info->flagF[2] = info->b;
 }
 
 void    parse_c(t_info *info, char *line)
 {
-    int r = 0;
-    int g = 0;
-    int b = 0;
     int y;
 
     if (check_c_f(line) == -1)
@@ -86,29 +70,20 @@ void    parse_c(t_info *info, char *line)
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
-    {
-        r = (r * 10) + (line[y] - '0');
-        y++;
-    }
+        info->r2 = (info->r2 * 10) + (line[y++] - '0');
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
-    {
-        g = (g * 10) + (line[y] - '0');
-        y++;
-    }
+        info->g2 = (info->g2 * 10) + (line[y++] - '0');
     while (ft_isdigit(line[y]) == 0)
         y++;
     while (ft_isdigit(line[y]) == 1)
-    {
-        b = (b * 10) + (line[y] - '0');
-        y++;
-    }
-    if (r > 255 || b > 255 || g > 255)
+        info->b2 = (info->b2 * 10) + (line[y++] - '0');
+    if (info->r2 > 255 || info->b2 > 255 || info->g2 > 255)
         printf("ERROR");
-    info->flagC[0] = r;
-    info->flagC[1] = g;
-    info->flagC[2] = b;
+    info->flagC[0] = info->r2;
+    info->flagC[1] = info->g2;
+    info->flagC[2] = info->b2;
 }
 
 void    parse_variable(t_info *info, char *line, int control)
