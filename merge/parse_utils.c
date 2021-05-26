@@ -26,6 +26,7 @@ void	parse_r(t_info *info, char *line)
 		info->height = (info->height * 10) + (line[y] - '0');
 		y++;
 	}
+	info->counter++;
 }
 
 void	parse_f(t_info *info, char *line)
@@ -50,11 +51,10 @@ void	parse_f(t_info *info, char *line)
 		y++;
 	while (ft_isdigit(line[y]) == 1)
 		info->b = (info->b * 10) + (line[y++] - '0');
-	if (info->r > 255 || info->b > 255 || info->g > 255)
-		printf("ERROR");
 	info->flagF[0] = info->r;
 	info->flagF[1] = info->g;
 	info->flagF[2] = info->b;
+	info->counter++;
 }
 
 void	parse_c(t_info *info, char *line)
@@ -79,11 +79,10 @@ void	parse_c(t_info *info, char *line)
 		y++;
 	while (ft_isdigit(line[y]) == 1)
 		info->b2 = (info->b2 * 10) + (line[y++] - '0');
-	if (info->r2 > 255 || info->b2 > 255 || info->g2 > 255)
-		printf("ERROR");
 	info->flagC[0] = info->r2;
 	info->flagC[1] = info->g2;
 	info->flagC[2] = info->b2;
+	info->counter++;
 }
 
 void	parse_variable(t_info *info, char *line, int control)
@@ -98,6 +97,7 @@ void	parse_variable(t_info *info, char *line, int control)
 		y++;
 	save = ft_substr(line, y, ft_strlen(line) - y);
 	parse_flags(info, save, control);
+	info->counter++;
 }
 
 void	parse_flags(t_info *info, char *save, int control)

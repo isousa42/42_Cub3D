@@ -8,6 +8,7 @@ void	init_rgb(t_info *info)
 	info->r2 = 0;
 	info->g2 = 0;
 	info->b2 = 0;
+	info->counter = 0;
 }
 
 void	ft_init_info(t_info *info)

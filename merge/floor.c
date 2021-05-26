@@ -28,9 +28,9 @@ void	floor_calculations(t_info *info)
 	info->rc.cellX = (int)(info->rc.floorX);
 	info->rc.cellY = (int)(info->rc.floorY);
 	norminette = info->rc.floorX - info->rc.cellX;
-	info->rc.tx = (int)(textWidth * (norminette)) & (textWidth - 1);
+	info->rc.tx = (int)(TEXTWIDTH * (norminette)) & (TEXTWIDTH - 1);
 	norminette = info->rc.floorY - info->rc.cellY;
-	info->rc.ty = (int)(textHeight * (norminette)) & (textHeight - 1);
+	info->rc.ty = (int)(TEXTHEIGHT * (norminette)) & (TEXTHEIGHT - 1);
 	info->rc.floorX += info->rc.floorStepX;
 	info->rc.floorY += info->rc.floorStepY;
 }

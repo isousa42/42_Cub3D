@@ -17,7 +17,6 @@ void	draw_img(t_info *info)
 		y++;
 	}
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
-	
 }
 
 void	*ft_calloc(size_t count, size_t size)
@@ -43,7 +42,7 @@ void	ft_bzero(void *str, size_t n)
 	}
 }
 
-int		create_rgb(int r, int g, int b)
+int	create_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }

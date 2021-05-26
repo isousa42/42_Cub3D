@@ -53,6 +53,11 @@ void	parse_file(t_info *info, t_list **lista, char *line)
 
 void	check_width(t_info *info)
 {
+	if (info->counter != 8)
+	{
+		printf("ERROR = PROBLEM WITH THE FILE. Change it.");
+		exit(0);
+	}
 	if (info->width == 1920)
 		info->width = 1921;
 	if (info->width >= 2560)

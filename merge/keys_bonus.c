@@ -1,5 +1,7 @@
 #include "cub3d.h"
 
+#include "cub3d.h"
+
 void	handle_keys(t_info *info, int keys)
 {
 	double	oldDirX;
@@ -34,23 +36,19 @@ void	handle_keys_2(t_info *info, int keys)
 	if (info->keys.key_w)
 	{
 		info->norm2 = info->posX + info->dirX * info->moveSpeed;
-		if (info->map[(int)(info->norm2)][(int)(info->posY)] == '0'
-			|| info->map[(int)(info->norm2)][(int)(info->posY)] == '2')
+		if (info->map[(int)(info->norm2)][(int)(info->posY)] == '0')
 			info->posX += info->dirX * info->moveSpeed;
 		info->norm2 = info->posY + info->dirY * info->moveSpeed;
-		if (info->map[(int)(info->posX)][(int)(info->norm2)] == '0'
-			|| info->map[(int)(info->posX)][(int)(info->norm2)] == '2')
+		if (info->map[(int)(info->posX)][(int)(info->norm2)] == '0')
 			info->posY += info->dirY * info->moveSpeed;
 	}
 	if (info->keys.key_s)
 	{
 		info->norm2 = info->posX - info->dirX * info->moveSpeed;
-		if (info->map[(int)(info->norm2)][(int)(info->posY)] == '0'
-			|| info->map[(int)(info->norm2)][(int)(info->posY)] == '2')
+		if (info->map[(int)(info->norm2)][(int)(info->posY)] == '0')
 			info->posX -= info->dirX * info->moveSpeed;
 		info->norm2 = info->posY - info->dirY * info->moveSpeed;
-		if (info->map[(int)(info->posX)][(int)(info->norm2)] == '0'
-			|| info->map[(int)(info->posX)][(int)(info->norm2)] == '2')
+		if (info->map[(int)(info->posX)][(int)(info->norm2)] == '0')
 			info->posY -= info->dirY * info->moveSpeed;
 	}
 }

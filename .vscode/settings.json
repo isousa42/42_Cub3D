@@ -4,6 +4,7 @@
         "utility": "c",
         "ios": "c",
         "complex": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "__locale": "c"
     }
 }

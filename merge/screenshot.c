@@ -55,10 +55,12 @@ void	take_screenshot(t_info *info)
 	int	fz;
 	int	i;
 
+	if (info->width > 1500)
+		info->width = 1500;
+	rc_loop(info);
 	fz = 54 + (3 * (info->height * info->width));
 	fd = open("screenshot.bmp", O_WRONLY | O_CREAT, 0777 | O_TRUNC | O_APPEND);
 	write_header(fd, fz, info);
 	write_image(fd, info);
 	close(fd);
-	info->take_pic = 2;
 }

@@ -6,9 +6,9 @@ void	text_calc(t_info *info)
 
 	while (info->rc.y < info->rc.drawEnd)
 	{
-		info->rc.textY = (int)info->rc.textPos & (textHeight - 1);
+		info->rc.textY = (int)info->rc.textPos & (TEXTHEIGHT - 1);
 		info->rc.textPos += info->rc.step;
-		norminette = textHeight * info->rc.textY + info->rc.textX;
+		norminette = TEXTHEIGHT * info->rc.textY + info->rc.textX;
 		if (info->rc.side == 0)
 			info->rc.color = info->texture[0][norminette];
 		else if (info->rc.side == 1)
@@ -63,9 +63,15 @@ void	rc_loop(t_info *info)
 
 int	first_loop(t_info *info)
 {
-	rc_loop(info);
 	if (info->take_pic == 1)
+	{
 		take_screenshot(info);
+		free(info->texture);
+		free(info->buff);
+		free(info->map);
+		close_window(info);
+	}
+	rc_loop(info);
 	draw_img(info);
 	key_hook(info);
 	return (0);

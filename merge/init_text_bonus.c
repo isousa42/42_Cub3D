@@ -1,5 +1,7 @@
 #include "cub3d.h"
 
+#include "cub3d.h"
+
 int	load_img(t_info *info, int *texture, char *path, t_image *img)
 {
 	int	x;
@@ -38,6 +40,10 @@ void	free_text(t_info *info, int control)
 		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (EA)!");
 	else if (control == 5)
 		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (S)!");
+	else if (control == 6)
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (S)!");
+	else if (control == 7)
+		printf("ERROR = NOT POSSIBLE TO UPLOAD THE TEXTURE (S)!");
 	free(info->texture);
 	free(info->buff);
 	free(info->sprites.sprites_buff);
@@ -58,6 +64,10 @@ void	load_text(t_info *info)
 		free_text(info, 4);
 	if (load_img(info, info->texture[4], info->flagS, &img) == -1)
 		free_text(info, 5);
+	if (load_img(info, info->texture[5], "textures/ceiling.xpm", &img) == -1)
+		free_text(info, 6);
+	if (load_img(info, info->texture[6], "textures/floor.xpm", &img) == -1)
+		free_text(info, 7);
 }
 
 int	handle_buff(t_info *info)
@@ -68,9 +78,9 @@ int	handle_buff(t_info *info)
 	info->buff = ft_calloc(info->height, sizeof(int **));
 	while (++i < info->height)
 		info->buff[i] = ft_calloc(info->width, sizeof(int *));
-	info->texture = ft_calloc(5, sizeof(int **));
+	info->texture = ft_calloc(7, sizeof(int **));
 	i = -1;
-	while (++i < 5)
+	while (++i < 7)
 		info->texture[i] = ft_calloc(TEXTHEIGHT * TEXTWIDTH, sizeof(int *));
 	load_text(info);
 	return (0);

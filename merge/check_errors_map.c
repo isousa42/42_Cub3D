@@ -14,7 +14,7 @@ void	check_errors_map(char **save, int size)
 	}
 	if (check_inside(save, size) == -1)
 	{
-		printf("\033[1;32mERROR = SOMETHING WRONG IN MAP. CORRECT IT (please)");
+		printf("ERROR = SOMETHING WRONG IN MAP. CORRECT IT (please)");
 		exit(0);
 	}
 	if (check_letters(save, size) != 1)
