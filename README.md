@@ -17,7 +17,7 @@ It is the first design project in the 42Cursus and the students are able to lear
 
 To be able to do this 3D Game is necessary to "explore the playful practical applications of mathematics without having to understand the specifics.
 
-The project must be done using the Ray-Casting principles and it should be a 3D graphical representation from inside od a maze from a first-person perpective.
+The project must be done using the Ray-Casting principles and it should be a 3D graphical representation from inside of a maze from a first-person perpective.
 
 
   
